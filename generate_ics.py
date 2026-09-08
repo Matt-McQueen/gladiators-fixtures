@@ -34,7 +34,7 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 from bs4 import BeautifulSoup
-from icalendar import Calendar, Event
+from icalendar import Alarm, Calendar, Event
 from zoneinfo import ZoneInfo
 
 TEAMS = [
@@ -213,6 +213,17 @@ def build_calendar(fixtures: list[dict]) -> tuple[Calendar, dict]:
         event.add("description", description)
         if fx["is_home"]:
             event.add("url", TICKETS_URL)
+
+        # Reminder the day before tip-off. Google Calendar ignores VALARMs
+        # on subscribed feeds (it applies the subscriber's own default
+        # notification instead), but Apple Calendar and Outlook honour
+        # them.
+        alarm = Alarm()
+        alarm.add("action", "DISPLAY")
+        alarm.add("trigger", timedelta(days=-1))
+        alarm.add("description", f"Reminder: {summary}")
+        event.add_component(alarm)
+
         cal.add_component(event)
 
         stats["written"] += 1
