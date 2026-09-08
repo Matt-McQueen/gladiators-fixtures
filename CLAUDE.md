@@ -10,7 +10,16 @@ pick up fixture changes (time, venue, postponements) automatically.
 - `generate_ics.py` -- the whole pipeline: fetch, parse, build calendar
 - `test_generate_ics.py` -- stdlib `unittest`, no network, no extra
   dependency. Run with `python -m unittest -v`
-- `requirements.txt` -- requests, beautifulsoup4, icalendar
+- `requirements.txt` -- requests, beautifulsoup4, icalendar, with major
+  versions **capped** (`icalendar>=7.3,<8` etc). This runs unattended
+  hourly, and icalendar is what formats the output, so an automatic
+  breaking-major upgrade could publish a subtly wrong feed behind a
+  green tick. Don't switch to exact `==` pins: that freezes out security
+  patches (requests handles TLS) and there's no Dependabot here to bump
+  them. Raising a cap is deliberate -- bump, run the tests, eyeball the
+  generated `.ics`. Import icalendar names from the top-level package
+  (`from icalendar import vDuration`), never `icalendar.prop`, which is
+  internal layout that moves between majors.
 - `.github/workflows/update-fixtures.yml` -- runs on a cron schedule,
   publishes `gladiators-fixtures.ics` **and** `fixtures_state.json` to
   the `gh-pages` branch (both generated -- `.gitignore`d on `main`)

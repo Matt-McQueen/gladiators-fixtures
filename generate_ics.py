@@ -45,8 +45,7 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 from bs4 import BeautifulSoup
-from icalendar import Alarm, Calendar, Event
-from icalendar.prop import vDuration
+from icalendar import Alarm, Calendar, Event, vDuration
 from zoneinfo import ZoneInfo
 
 TEAMS = [

@@ -15,7 +15,7 @@ Run:  python -m unittest -v
 import unittest
 from datetime import datetime, timedelta
 
-from icalendar.prop import vDuration
+from icalendar import vDuration
 
 import generate_ics as gi
 

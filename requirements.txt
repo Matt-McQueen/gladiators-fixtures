@@ -1,3 +1,11 @@
-requests
-beautifulsoup4
-icalendar
+# Major versions are capped deliberately. This script runs unattended on an
+# hourly cron, so an automatic breaking-major upgrade would land in
+# production with nobody watching -- and icalendar in particular (already on
+# major 7) is what formats the output, where a silent serialisation change
+# publishes a subtly wrong feed rather than failing loudly. Minors and
+# patches still come through, so security fixes aren't frozen out.
+# Raising a cap is a deliberate act: bump it, run `python -m unittest`, and
+# check the generated .ics still looks right.
+requests>=2.32,<3
+beautifulsoup4>=4.13,<5
+icalendar>=7.3,<8
