@@ -198,12 +198,6 @@ def build_calendar(fixtures: list[dict]) -> tuple[Calendar, dict]:
         )
         if fx["time_tbc"]:
             description += " Tip-off time not yet published -- shown as a placeholder."
-        if fx["is_home"]:
-            # Lead with the tickets line so it's the first thing visible in
-            # apps that truncate long descriptions, on top of the dedicated
-            # URL property below (which most calendar apps surface as a
-            # standalone clickable link rather than inline text).
-            description = f"Tickets: {TICKETS_URL}\n\n{description}"
 
         event = Event()
         event.add("uid", uid)
