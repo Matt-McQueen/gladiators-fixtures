@@ -69,6 +69,12 @@ jobs:
           publish_dir: ./_site
           publish_branch: gh-pages
           keep_files: false
+          # Keep only the latest commit on gh-pages. Without this, every
+          # run adds a commit of generated output -- at hourly that's
+          # ~8,700 a year, each a ~40KB payload that barely deltas because
+          # every event's DTSTAMP changes. The branch is disposable build
+          # output with nothing worth keeping a history of.
+          force_orphan: true
 
 # --------------------------------------------------------------------
 # SUBSCRIBING, once the feed URL above is live:
