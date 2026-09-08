@@ -1,0 +1,73 @@
+# Save this file as .github/workflows/update-fixtures.yml in your repo.
+#
+# One-time setup:
+#   1. Create a public GitHub repo.
+#   2. Add generate_ics.py and requirements.txt to it (repo root).
+#   3. Settings > Pages > Deploy from branch > gh-pages / (root).
+#      (This branch doesn't need to exist yet -- the first workflow run
+#      creates it.)
+#   4. Commit and push this file. Go to the repo's Actions tab and either
+#      wait for the scheduled run or click "Run workflow" to trigger it
+#      manually right away.
+#
+# Your feed URL will then be:
+#   https://<your-username>.github.io/<repo-name>/gladiators-fixtures.ics
+#
+# That's the URL you give to Outlook / Apple Calendar / Google Calendar
+# to subscribe (see the bottom of this file for how, per app).
+
+name: Update fixtures feed
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # every 6 hours -- adjust to taste
+  workflow_dispatch: {}      # lets you trigger a run manually from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - run: python generate_ics.py
+
+      - name: Publish to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          publish_branch: gh-pages
+          keep_files: false
+
+# --------------------------------------------------------------------
+# SUBSCRIBING, once the feed URL above is live:
+#
+# Apple Calendar (Mac/iPhone):
+#   File > New Calendar Subscription > paste the URL
+#   (or use webcal:// in place of https:// to have it open Calendar
+#   directly from a link)
+#
+# Google Calendar:
+#   Other calendars (+) > From URL > paste the https:// URL
+#
+# Outlook (desktop):
+#   File > Open & Export > Import/Export > "Subscribe to a calendar" /
+#   "Add calendar from Internet" > paste the URL
+#
+# Outlook.com / Office 365 (web):
+#   Add calendar > Subscribe from web > paste the URL
+#
+# Refresh cadence is controlled by each app, not by you: Google and
+# Outlook typically check every few hours to once a day; Apple Calendar
+# lets you pick an interval (5 min to weekly) in the subscription's
+# settings after adding it.
+# --------------------------------------------------------------------
