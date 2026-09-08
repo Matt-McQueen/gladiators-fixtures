@@ -398,30 +398,21 @@ def build_calendar(fixtures: list[dict], previous_state: dict) -> tuple[Calendar
     return cal, stats, {"fixtures": current_fixtures, "tombstones": still_pending}
 
 
-def main():
-    previous_state = fetch_previous_state()
+def assert_team_coverage(per_team_counts: dict, previous_state: dict, now_local: datetime) -> None:
+    """
+    Raise SystemExit if a team's fixtures have silently vanished.
 
-    all_fixtures = []
-    per_team_counts = {}
+    A team parsing zero fixtures is legitimate once its season is over, but
+    not while future-dated fixtures for that team are still on record from
+    a previous run -- those should still be published, so their
+    disappearance means acquisition broke rather than the schedule
+    emptying. That distinction is the whole point of this check: don't
+    reduce it to a bare count, or an ended season starts failing every run.
 
-    for team in TEAMS:
-        text = fetch_text(team["url"])
-        fixtures = parse_fixtures(text)
-        for fx in fixtures:
-            fx["team_code"] = team["code"]
-            fx["team_label"] = team["label"]
-        all_fixtures.extend(fixtures)
-        per_team_counts[team["code"]] = len(fixtures)
-        print(f"Parsed {len(fixtures)} {team['label']} fixture(s) from {team['url']}")
-
-    # A team parsing zero fixtures is legitimate once its season is over,
-    # but not while future-dated fixtures for that team are still on record
-    # from a previous run -- those should still be on the page, so their
-    # disappearance means the parse broke rather than the schedule
-    # emptying. Bail out before writing anything, so the last good feed
-    # stays published instead of subscribers losing a whole team's games to
-    # a run that would otherwise look successful.
-    now_local = datetime.now(timezone.utc).astimezone(TEAM_TZ)
+    main() calls this before writing any file, so a broken run leaves the
+    last good feed published rather than replacing it with one that's
+    missing a whole team behind a successful-looking exit.
+    """
     for team in TEAMS:
         if per_team_counts[team["code"]]:
             continue
@@ -439,6 +430,27 @@ def main():
                 f"team were on record last run (next: {nxt['opponent']} on {nxt['date']}). The page "
                 f"structure has probably changed -- refusing to publish a partial feed."
             )
+
+
+def main():
+    previous_state = fetch_previous_state()
+
+    all_fixtures = []
+    per_team_counts = {}
+
+    for team in TEAMS:
+        text = fetch_text(team["url"])
+        fixtures = parse_fixtures(text)
+        for fx in fixtures:
+            fx["team_code"] = team["code"]
+            fx["team_label"] = team["label"]
+        all_fixtures.extend(fixtures)
+        per_team_counts[team["code"]] = len(fixtures)
+        print(f"Parsed {len(fixtures)} {team['label']} fixture(s) from {team['url']}")
+
+    assert_team_coverage(
+        per_team_counts, previous_state, datetime.now(timezone.utc).astimezone(TEAM_TZ)
+    )
 
     if not all_fixtures:
         raise SystemExit("No upcoming fixtures parsed -- the page structure may have changed.")

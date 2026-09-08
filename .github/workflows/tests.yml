@@ -1,0 +1,25 @@
+name: Tests
+
+# Deliberately NOT part of update-fixtures.yml. That workflow publishes the
+# live feed hourly, and a failing test there would leave the published feed
+# to go stale rather than just flagging a problem.
+on:
+  push:
+  pull_request:
+  workflow_dispatch: {}
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      # No network access needed: the suite covers build_calendar() and the
+      # coverage guard, not scraping.
+      - run: python -m unittest -v

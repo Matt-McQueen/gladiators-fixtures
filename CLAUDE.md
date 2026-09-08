@@ -8,6 +8,8 @@ the result to GitHub Pages, so calendar apps subscribed to that URL
 pick up fixture changes (time, venue, postponements) automatically.
 
 - `generate_ics.py` -- the whole pipeline: fetch, parse, build calendar
+- `test_generate_ics.py` -- stdlib `unittest`, no network, no extra
+  dependency. Run with `python -m unittest -v`
 - `requirements.txt` -- requests, beautifulsoup4, icalendar
 - `.github/workflows/update-fixtures.yml` -- runs on a cron schedule,
   publishes `gladiators-fixtures.ics` **and** `fixtures_state.json` to
@@ -141,6 +143,28 @@ to actually fix the root cause, that's an open thread, not a blocker.
   to be "Read and write" for the `gh-pages` push step to succeed.
 - Live feed URL pattern:
   `https://<username>.github.io/<repo>/gladiators-fixtures.ics`
+
+## Testing scope (deliberate)
+`test_generate_ics.py` covers only what outlives the current scraper:
+`build_calendar()` takes a plain list of fixture dicts and knows nothing
+about where they came from, so those tests still hold if fixtures later
+arrive from a direct feed instead of scraped HTML. There are
+intentionally **no** tests for `fetch_text()`, `parse_fixtures()` or the
+regexes -- they get deleted along with the scraper, and a broken parse
+already fails safe in production via `assert_team_coverage()`. Don't
+"improve coverage" by adding them back without that changing.
+
+The suite is mutation-checked: removing the tombstone carry-forward, the
+live-UID collision guard, the repeat-opponent ambiguity guard, the team
+guard's date comparison, the TTL's ISO-string conversion, or
+re-duplicating the ticket URL into the description each make a specific
+test fail. If you change this logic, re-check that the relevant test
+still fails when you break it deliberately -- a passing test against
+broken code is worse than no test.
+
+Tests run in their own workflow (`tests.yml`) on push, **not** in
+`update-fixtures.yml`. A failing test must not stop the hourly publish,
+or the live feed goes stale instead of merely flagging a problem.
 
 ## If something looks wrong in the output
 The most reliable debugging method used throughout this project: fetch
