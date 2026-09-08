@@ -73,8 +73,8 @@ to actually fix the root cause, that's an open thread, not a blocker.
   `generate_ics.py` is the single source for both `REFRESH-INTERVAL`
   (RFC 7986) and `X-PUBLISHED-TTL` (the older extension Outlook
   honours), and must match the workflow cron. It was `PT12H` against a
-  6-hourly publish once, which just made every subscriber lag up to 12
-  hours for no reason. Two traps if you touch this: `X-PUBLISHED-TTL`
+  6-hourly publish once, which just made every subscriber lag for no
+  reason. Two traps if you touch this: `X-PUBLISHED-TTL`
   is untyped, so handed a `timedelta` it silently renders `6:00:00`
   (not a valid duration) and needs the ISO 8601 string; while
   `REFRESH-INTERVAL` is DURATION-typed and rejects a string, needing
@@ -100,8 +100,8 @@ to actually fix the root cause, that's an open thread, not a blocker.
   tombstone is kept in `state["tombstones"]` and **re-emitted every
   run** until its old date passes. This was a real bug once: emitting
   it only on the run that detected the change left it in the feed for a
-  single 6-hour publish cycle, so any client polling less often than
-  that (Google Calendar and Outlook.com refresh subscriptions roughly
+  single publish cycle, so any client polling less often than that
+  (Google Calendar and Outlook.com refresh subscriptions roughly
   daily) could miss it entirely -- stranding exactly the non-compliant
   clients a tombstone exists for with a permanent wrong-date event. Two
   guards go with this: a tombstone is retired once its slot is in the
@@ -136,7 +136,7 @@ to actually fix the root cause, that's an open thread, not a blocker.
   Actions on public repos are free with no minute cap, so schedule
   frequency isn't a cost concern.
 - Workflow: `.github/workflows/update-fixtures.yml`, cron
-  `0 */6 * * *` (every 6 hours), triggers via `workflow_dispatch` too.
+  `0 * * * *` (hourly), triggers via `workflow_dispatch` too.
 - "Workflow permissions" under Settings -> Actions -> General needed
   to be "Read and write" for the `gh-pages` push step to succeed.
 - Live feed URL pattern:

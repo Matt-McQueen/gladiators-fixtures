@@ -68,7 +68,7 @@ GAME_DURATION = timedelta(hours=2)
 # How often subscribers are told to poll. MUST track the workflow cron in
 # .github/workflows/update-fixtures.yml: a value longer than the publish
 # cadence just makes every client lag behind for no reason.
-REFRESH_INTERVAL = timedelta(hours=6)
+REFRESH_INTERVAL = timedelta(hours=1)
 OUTPUT_FILE = "gladiators-fixtures.ics"
 STATE_FILE = "fixtures_state.json"
 STATE_URL = "https://matt-mcqueen.github.io/gladiators-fixtures/fixtures_state.json"
