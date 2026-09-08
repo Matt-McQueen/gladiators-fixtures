@@ -203,12 +203,18 @@ def parse_fixtures(text: str) -> list[dict]:
     return fixtures
 
 
-def build_calendar(fixtures: list[dict], previous_state: dict) -> tuple[Calendar, dict, dict]:
+def build_calendar(
+    fixtures: list[dict], previous_state: dict, now_utc: datetime | None = None
+) -> tuple[Calendar, dict, dict]:
     """
     `fixtures` items must also carry 'team_code' ('M'/'W') and 'team_label'.
 
     `previous_state` is last run's state (see STATE_FILE), shaped as
     {"fixtures": [...], "tombstones": [...]}.
+
+    `now_utc` defaults to the current time; pass it explicitly to test the
+    time-dependent behaviour (the past-fixture filter and tombstone
+    retirement) at a fixed instant.
 
     Postponement handling: if a (team, opponent) pairing had exactly one
     fixture last run and exactly one this run but the date changed, that's
@@ -250,7 +256,8 @@ def build_calendar(fixtures: list[dict], previous_state: dict) -> tuple[Calendar
     cal.add("refresh-interval", REFRESH_INTERVAL, parameters={"VALUE": "DURATION"})
     cal.add("x-published-ttl", vDuration(REFRESH_INTERVAL).to_ical().decode())
 
-    now_utc = datetime.now(timezone.utc)
+    if now_utc is None:
+        now_utc = datetime.now(timezone.utc)
     now_local = now_utc.astimezone(TEAM_TZ)
     stats = {
         "written": 0,
@@ -270,7 +277,14 @@ def build_calendar(fixtures: list[dict], previous_state: dict) -> tuple[Calendar
         # keeps played games out of `fixtures`, but this catches anything
         # that marker missed (or a fixture whose tip-off time has simply
         # passed since the page was last scraped).
-        if dt < now_local:
+        #
+        # A fixture with no published tip-off time carries a placeholder
+        # time, so measuring it against that placeholder would drop the
+        # fixture from midday on match day -- exactly when someone needs
+        # it. Only the date is actually known for those, so they stay until
+        # the whole day is over.
+        cutoff = dt.replace(hour=23, minute=59) if fx["time_tbc"] else dt
+        if cutoff < now_local:
             stats["skipped_past"] += 1
             continue
 

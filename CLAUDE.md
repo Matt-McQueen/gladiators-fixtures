@@ -75,6 +75,15 @@ to actually fix the root cause, that's an open thread, not a blocker.
   It's deliberately **not** duplicated into the `description` text.
 - **"Tip-off" not "kickoff"** -- these are basketball games. Wording in
   descriptions and comments should say tip-off.
+- **Fixtures with no published tip-off time** get a midday placeholder,
+  `"(time TBC)"` appended to the summary and a note in the description.
+  Because that time is fiction, the past-fixture filter measures them
+  against **end of their date**, not the placeholder -- keying off the
+  placeholder made them vanish from midday on match day, exactly when
+  someone needed them. Only the date is genuinely known, so the whole
+  day is the right granularity. Don't apply that end-of-day cutoff to
+  fixtures with a real time: a 7:30pm tip-off should drop out at
+  7:30pm, and there's a test asserting the exemption doesn't leak.
 - **Day-before reminder**: every fixture (home and away) gets a
   `VALARM` (`ACTION:DISPLAY`, `TRIGGER:-P1D`). Apple Calendar and
   Outlook honour VALARMs from a subscribed feed; Google Calendar

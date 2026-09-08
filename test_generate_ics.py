@@ -13,7 +13,7 @@ Run:  python -m unittest -v
 """
 
 import unittest
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from icalendar import vDuration
 
@@ -23,6 +23,16 @@ import generate_ics as gi
 def days_ahead(n: int) -> str:
     """A date n days from now, in the site's DD/MM/YYYY form."""
     return (datetime.now(gi.TEAM_TZ) + timedelta(days=n)).strftime("%d/%m/%Y")
+
+
+def day_after(date_str: str) -> str:
+    return (datetime.strptime(date_str, "%d/%m/%Y") + timedelta(days=1)).strftime("%d/%m/%Y")
+
+
+def local_moment(date_str: str, hour: int, minute: int = 0) -> datetime:
+    """A fixed UTC instant, given a wall-clock time on a fixture's date."""
+    naive = datetime.strptime(date_str, "%d/%m/%Y")
+    return naive.replace(hour=hour, minute=minute, tzinfo=gi.TEAM_TZ).astimezone(timezone.utc)
 
 
 def fixture(
@@ -289,6 +299,56 @@ class BusinessRules(unittest.TestCase):
         self.assertEqual(events(cal), [])
         self.assertEqual(stats["skipped_past"], 1)
         self.assertEqual(state["fixtures"], [])
+
+
+class TbcFixtures(unittest.TestCase):
+    """
+    A fixture with no published tip-off time gets a midday placeholder, so
+    it must not be measured against that placeholder -- only its date is
+    actually known. `now` is injected so these hold whatever time of day
+    the suite runs at.
+    """
+
+    def tbc(self, date):
+        return fixture(date=date, time="12:00 pm", time_tbc=True)
+
+    def test_survives_the_afternoon_of_its_own_match_day(self):
+        """Regression: it used to disappear from the placeholder time onwards."""
+        date = days_ahead(30)
+        cal, stats, state = gi.build_calendar(
+            [self.tbc(date)], empty_state(), local_moment(date, 18, 0)
+        )
+        self.assertEqual(len(events(cal)), 1)
+        self.assertEqual(stats["skipped_past"], 0)
+        self.assertEqual(len(state["fixtures"]), 1)
+
+    def test_dropped_once_its_day_has_ended(self):
+        date = days_ahead(30)
+        cal, stats, _ = gi.build_calendar(
+            [self.tbc(date)], empty_state(), local_moment(day_after(date), 0, 30)
+        )
+        self.assertEqual(events(cal), [])
+        self.assertEqual(stats["skipped_past"], 1)
+
+    def test_exemption_does_not_leak_to_fixtures_with_a_known_time(self):
+        """A real 7:30pm tip-off is still past at 8pm, TBC handling aside."""
+        date = days_ahead(30)
+        cal, stats, _ = gi.build_calendar(
+            [fixture(date=date, time="7:30 pm", time_tbc=False)],
+            empty_state(),
+            local_moment(date, 20, 0),
+        )
+        self.assertEqual(events(cal), [])
+        self.assertEqual(stats["skipped_past"], 1)
+
+    def test_still_flagged_as_tbc_in_the_summary(self):
+        date = days_ahead(30)
+        cal, _, _ = gi.build_calendar(
+            [self.tbc(date)], empty_state(), local_moment(date, 18, 0)
+        )
+        event = events(cal)[0]
+        self.assertIn("(time TBC)", str(event["summary"]))
+        self.assertIn("placeholder", str(event["description"]))
 
 
 class CalendarHeaders(unittest.TestCase):
