@@ -24,11 +24,14 @@ hash of team+opponent+date (stable across time-of-day changes for the
 same fixture, but a postponement to a different date will produce a new
 UID). To stop a postponement from leaving a stale duplicate sitting in
 subscribers' calendars, this script also publishes a small state file
-(STATE_FILE/STATE_URL) recording each run's fixtures; the next run
-fetches it and, where a team+opponent pairing unambiguously moved date,
-emits an explicit CANCELLED tombstone for the old UID. See the
-build_calendar() docstring for the exact rule and its one deliberate
-gap (repeat opponents in a season can't be safely disambiguated).
+(STATE_FILE/STATE_URL) recording each run's fixtures and any CANCELLED
+tombstones still owed; the next run fetches it and, where a
+team+opponent pairing unambiguously moved date, emits an explicit
+CANCELLED tombstone for the old UID -- and keeps re-emitting it every
+run until that old date passes, since a feed that carried it for only
+one publish cycle would be missed by any client polling less often.
+See the build_calendar() docstring for the exact rule and its one
+deliberate gap (repeat opponents in a season can't be disambiguated).
 
 Before relying on this long-term: check robots.txt / site terms, and
 consider asking the club if they'd support an official feed instead.
@@ -82,23 +85,42 @@ def fetch_text(url: str) -> str:
     return soup.get_text("\n", strip=True)
 
 
-def fetch_previous_state() -> list[dict]:
+def fixture_datetime(date_str: str, time_str: str) -> datetime:
+    """A fixture's tip-off as an aware datetime, from the scraped strings."""
+    dt = datetime.strptime(f"{date_str} {time_str}", "%d/%m/%Y %I:%M %p")
+    return dt.replace(tzinfo=TEAM_TZ)
+
+
+def fetch_previous_state() -> dict:
     """
     Best-effort load of the state file this script wrote on its previous
-    run (published to STATE_URL alongside the .ics). Used only to detect
-    postponements -- see the "postponed" handling in build_calendar(). Any
-    failure (first-ever run before the file exists, a network hiccup, a
+    run (published to STATE_URL alongside the .ics), shaped as
+    {"fixtures": [...], "tombstones": [...]}. Used to detect postponements
+    and to keep their CANCELLED tombstones alive -- see build_calendar().
+
+    Any failure (first-ever run before the file exists, a network hiccup, a
     corrupt file) is treated as "no previous state" rather than aborting
-    the run: losing postponement-cancellation detection for one cycle is a
-    minor, self-correcting degradation, not worth failing the feed over.
+    the run: losing postponement detection for one cycle is a minor,
+    self-correcting degradation, not worth failing the feed over.
+
+    A bare list is accepted as the "fixtures" half, since that was the
+    file's shape before tombstones were carried forward -- this is network
+    input, so it gets normalised rather than trusted.
     """
     try:
         resp = requests.get(STATE_URL, headers=REQUEST_HEADERS, timeout=15)
         resp.raise_for_status()
-        return resp.json()
+        payload = resp.json()
     except Exception as exc:
-        print(f"NOTE: couldn't load previous state ({exc}) -- skipping postponement-cancellation detection for this run.")
-        return []
+        print(f"NOTE: couldn't load previous state ({exc}) -- skipping postponement detection for this run.")
+        return {"fixtures": [], "tombstones": []}
+
+    if isinstance(payload, list):
+        return {"fixtures": payload, "tombstones": []}
+    return {
+        "fixtures": payload.get("fixtures", []),
+        "tombstones": payload.get("tombstones", []),
+    }
 
 
 def parse_fixtures(text: str) -> list[dict]:
@@ -177,18 +199,27 @@ def parse_fixtures(text: str) -> list[dict]:
     return fixtures
 
 
-def build_calendar(fixtures: list[dict], previous_state: list[dict]) -> tuple[Calendar, dict, list[dict]]:
+def build_calendar(fixtures: list[dict], previous_state: dict) -> tuple[Calendar, dict, dict]:
     """
     `fixtures` items must also carry 'team_code' ('M'/'W') and 'team_label'.
 
-    `previous_state` is last run's list of state records (see STATE_FILE),
-    used only to detect postponements: if a (team, opponent) pairing had
-    exactly one fixture last run and has exactly one fixture this run, but
-    the date changed, that's an unambiguous reschedule -- an explicit
-    CANCELLED tombstone is emitted for the old UID/date so subscribers'
-    calendars clean up the stale entry on next refresh, rather than
-    relying solely on the old event quietly not being re-included (which
-    already-compliant clients handle, but not every ICS consumer does).
+    `previous_state` is last run's state (see STATE_FILE), shaped as
+    {"fixtures": [...], "tombstones": [...]}.
+
+    Postponement handling: if a (team, opponent) pairing had exactly one
+    fixture last run and exactly one this run but the date changed, that's
+    an unambiguous reschedule, so an explicit CANCELLED tombstone is
+    emitted for the old UID/date. Subscribers' calendars then drop the
+    stale entry, rather than this relying solely on the old UID quietly
+    not being re-included -- compliant clients treat that as a delete, but
+    not every ICS consumer does.
+
+    Tombstones are carried forward in the state file and re-emitted every
+    run until the old slot's date has passed. Emitting one only on the run
+    that detected the change would put it in the feed for a single publish
+    cycle, which a client polling less often than that can miss entirely
+    -- leaving precisely the non-compliant clients a tombstone exists for
+    stuck with a permanent wrong-date event.
 
     Deliberately NOT handled: a (team, opponent) pairing with more than
     one fixture in the group (e.g. a repeat opponent played home and away
@@ -199,8 +230,8 @@ def build_calendar(fixtures: list[dict], previous_state: list[dict]) -> tuple[Ca
     behaviour.
 
     Returns (calendar, stats, current_state) where current_state is this
-    run's list of records, meant to be persisted as STATE_FILE for the
-    next run to compare against.
+    run's state dict, meant to be persisted as STATE_FILE for the next
+    run to compare against.
     """
     cal = Calendar()
     cal.add("prodid", "-//Caledonia Gladiators Fixtures//caledoniagladiators.com//")
@@ -211,51 +242,19 @@ def build_calendar(fixtures: list[dict], previous_state: list[dict]) -> tuple[Ca
 
     now_utc = datetime.now(timezone.utc)
     now_local = now_utc.astimezone(TEAM_TZ)
-    stats = {"written": 0, "home": 0, "away": 0, "skipped_past": 0, "postponed_cancelled": 0}
-    current_state = []
-
-    prev_groups = defaultdict(list)
-    for rec in previous_state:
-        prev_groups[(rec["team_code"], rec["opponent"])].append(rec)
-
-    current_groups = defaultdict(list)
-    for fx in fixtures:
-        current_groups[(fx["team_code"], fx["opponent"])].append(fx)
-
-    postponed = []
-    for key, prev_list in prev_groups.items():
-        if len(prev_list) != 1:
-            continue  # repeat opponent last run -- can't safely disambiguate
-        current_list = current_groups.get(key)
-        if not current_list or len(current_list) != 1:
-            continue  # repeat opponent now, or fixture gone entirely (played/cancelled)
-        old, new = prev_list[0], current_list[0]
-        if old["date"] != new["date"]:
-            postponed.append(old)
-
-    for old in postponed:
-        old_dt = datetime.strptime(f"{old['date']} {old['time']}", "%d/%m/%Y %I:%M %p")
-        old_dt = old_dt.replace(tzinfo=TEAM_TZ)
-        old_team_name = f"Caledonia Gladiators ({old['team_code']})"
-        if old["is_home"]:
-            old_summary = f"{old_team_name} vs {old['opponent']} (Home)"
-        else:
-            old_summary = f"{old['opponent']} vs {old_team_name} (Away)"
-
-        cancel_event = Event()
-        cancel_event.add("uid", old["uid"])
-        cancel_event.add("dtstart", old_dt)
-        cancel_event.add("dtend", old_dt + GAME_DURATION)
-        cancel_event.add("dtstamp", now_utc)
-        cancel_event.add("sequence", 1)
-        cancel_event.add("status", "CANCELLED")
-        cancel_event.add("summary", f"CANCELLED (rescheduled) -- {old_summary}")
-        cal.add_component(cancel_event)
-        stats["postponed_cancelled"] += 1
+    stats = {
+        "written": 0,
+        "home": 0,
+        "away": 0,
+        "skipped_past": 0,
+        "postponed_detected": 0,
+        "tombstones_emitted": 0,
+    }
+    current_fixtures = []
+    written_uids = set()
 
     for fx in fixtures:
-        dt = datetime.strptime(f"{fx['date']} {fx['time']}", "%d/%m/%Y %I:%M %p")
-        dt = dt.replace(tzinfo=TEAM_TZ)
+        dt = fixture_datetime(fx["date"], fx["time"])
 
         # Belt-and-braces: the page's own "Match Recap" marker already
         # keeps played games out of `fixtures`, but this catches anything
@@ -318,7 +317,7 @@ def build_calendar(fixtures: list[dict], previous_state: list[dict]) -> tuple[Ca
 
         cal.add_component(event)
 
-        current_state.append(
+        current_fixtures.append(
             {
                 "team_code": fx["team_code"],
                 "opponent": fx["opponent"],
@@ -328,14 +327,69 @@ def build_calendar(fixtures: list[dict], previous_state: list[dict]) -> tuple[Ca
                 "uid": uid,
             }
         )
+        written_uids.add(uid)
 
         stats["written"] += 1
         stats["home" if fx["is_home"] else "away"] += 1
 
-    return cal, stats, current_state
+    prev_groups = defaultdict(list)
+    for rec in previous_state["fixtures"]:
+        prev_groups[(rec["team_code"], rec["opponent"])].append(rec)
+
+    current_groups = defaultdict(list)
+    for fx in fixtures:
+        current_groups[(fx["team_code"], fx["opponent"])].append(fx)
+
+    # Tombstones still owed from earlier runs, keyed by UID so a repeat
+    # detection can't double-add one.
+    pending = {rec["uid"]: rec for rec in previous_state["tombstones"]}
+
+    for key, prev_list in prev_groups.items():
+        if len(prev_list) != 1:
+            continue  # repeat opponent last run -- can't safely disambiguate
+        current_list = current_groups.get(key)
+        if not current_list or len(current_list) != 1:
+            continue  # repeat opponent now, or fixture gone entirely (played/cancelled)
+        old, new = prev_list[0], current_list[0]
+        if old["date"] != new["date"] and old["uid"] not in pending:
+            pending[old["uid"]] = old
+            stats["postponed_detected"] += 1
+
+    still_pending = []
+    for rec in pending.values():
+        old_dt = fixture_datetime(rec["date"], rec["time"])
+        # Retire a tombstone once its old slot has passed (the stale event
+        # is then in the past and harmless), and never contradict a live
+        # event on the same UID -- which happens if a fixture is moved
+        # back to the date it originally held.
+        if old_dt < now_local or rec["uid"] in written_uids:
+            continue
+
+        old_team_name = f"Caledonia Gladiators ({rec['team_code']})"
+        if rec["is_home"]:
+            old_summary = f"{old_team_name} vs {rec['opponent']} (Home)"
+        else:
+            old_summary = f"{rec['opponent']} vs {old_team_name} (Away)"
+
+        cancel_event = Event()
+        cancel_event.add("uid", rec["uid"])
+        cancel_event.add("dtstart", old_dt)
+        cancel_event.add("dtend", old_dt + GAME_DURATION)
+        cancel_event.add("dtstamp", now_utc)
+        cancel_event.add("sequence", 1)
+        cancel_event.add("status", "CANCELLED")
+        cancel_event.add("summary", f"CANCELLED (rescheduled) -- {old_summary}")
+        cal.add_component(cancel_event)
+
+        still_pending.append(rec)
+        stats["tombstones_emitted"] += 1
+
+    return cal, stats, {"fixtures": current_fixtures, "tombstones": still_pending}
 
 
 def main():
+    previous_state = fetch_previous_state()
+
     all_fixtures = []
     per_team_counts = {}
 
@@ -346,13 +400,38 @@ def main():
             fx["team_code"] = team["code"]
             fx["team_label"] = team["label"]
         all_fixtures.extend(fixtures)
-        per_team_counts[team["label"]] = len(fixtures)
+        per_team_counts[team["code"]] = len(fixtures)
         print(f"Parsed {len(fixtures)} {team['label']} fixture(s) from {team['url']}")
+
+    # A team parsing zero fixtures is legitimate once its season is over,
+    # but not while future-dated fixtures for that team are still on record
+    # from a previous run -- those should still be on the page, so their
+    # disappearance means the parse broke rather than the schedule
+    # emptying. Bail out before writing anything, so the last good feed
+    # stays published instead of subscribers losing a whole team's games to
+    # a run that would otherwise look successful.
+    now_local = datetime.now(timezone.utc).astimezone(TEAM_TZ)
+    for team in TEAMS:
+        if per_team_counts[team["code"]]:
+            continue
+        expected = [
+            rec
+            for rec in previous_state["fixtures"]
+            if rec["team_code"] == team["code"]
+            and fixture_datetime(rec["date"], rec["time"]) > now_local
+        ]
+        if expected:
+            expected.sort(key=lambda rec: fixture_datetime(rec["date"], rec["time"]))
+            nxt = expected[0]
+            raise SystemExit(
+                f"Parsed 0 {team['label']} fixtures, but {len(expected)} future fixture(s) for that "
+                f"team were on record last run (next: {nxt['opponent']} on {nxt['date']}). The page "
+                f"structure has probably changed -- refusing to publish a partial feed."
+            )
 
     if not all_fixtures:
         raise SystemExit("No upcoming fixtures parsed -- the page structure may have changed.")
 
-    previous_state = fetch_previous_state()
     cal, stats, current_state = build_calendar(all_fixtures, previous_state)
 
     with open(OUTPUT_FILE, "wb") as f:
@@ -367,11 +446,16 @@ def main():
             f"already -- if this number is consistently large, the marker detection may need "
             f"a look, though the output file itself is still correct either way)."
         )
-    if stats["postponed_cancelled"]:
+    if stats["postponed_detected"]:
         print(
-            f"NOTE: {stats['postponed_cancelled']} fixture(s) detected as rescheduled since the "
-            f"last run -- emitted an explicit CANCELLED tombstone event for the old date so "
-            f"subscribers' calendars drop the stale entry on next refresh."
+            f"NOTE: {stats['postponed_detected']} fixture(s) newly detected as rescheduled since "
+            f"the last run."
+        )
+    if stats["tombstones_emitted"]:
+        print(
+            f"NOTE: {stats['tombstones_emitted']} CANCELLED tombstone(s) included in this feed, so "
+            f"subscribers' calendars drop the stale entry. Each is re-published every run until its "
+            f"old date passes."
         )
     print(
         f"Wrote {stats['written']} fixtures to {OUTPUT_FILE} "

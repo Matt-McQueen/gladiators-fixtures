@@ -78,22 +78,48 @@ to actually fix the root cause, that's an open thread, not a blocker.
 - **Postponement handling**: a stale event for the old date isn't just
   left to silently disappear from the feed. `generate_ics.py` publishes
   `fixtures_state.json` (STATE_FILE/STATE_URL) alongside the `.ics`
-  after every run, recording each fixture's team/opponent/date/time/
-  uid. The *next* run fetches that file and, when a (team, opponent)
-  pairing had exactly one fixture last run and exactly one this run but
-  the date changed, treats it as an unambiguous reschedule and emits an
-  explicit `STATUS:CANCELLED` tombstone VEVENT for the old UID/date --
-  see the `build_calendar()` docstring. **Deliberately not handled:**
-  a (team, opponent) pairing with more than one fixture on either side
-  (a repeat opponent played twice in a season, which does happen --
-  e.g. Gladiators vs Liverpool). The site gives no identifier beyond
-  team+opponent+date, so which of several same-opponent fixtures moved
-  can't be safely disambiguated; that case silently falls back to the
-  old passive-expiry behaviour (the stale UID just isn't re-included in
-  the next feed, which compliant subscription clients treat as a
-  delete on their next refresh anyway). `fetch_previous_state()` treats
-  any failure to load the state file (first-ever run, network hiccup,
-  corrupt file) as "no previous state" rather than aborting the run.
+  after every run, shaped
+  `{"fixtures": [...], "tombstones": [...]}` -- each record carrying
+  team/opponent/date/time/is_home/uid. The *next* run fetches that file
+  and, when a (team, opponent) pairing had exactly one fixture last run
+  and exactly one this run but the date changed, treats it as an
+  unambiguous reschedule and emits an explicit `STATUS:CANCELLED`
+  tombstone VEVENT for the old UID/date -- see the `build_calendar()`
+  docstring.
+- **Tombstones must be carried forward, not emitted once.** A
+  tombstone is kept in `state["tombstones"]` and **re-emitted every
+  run** until its old date passes. This was a real bug once: emitting
+  it only on the run that detected the change left it in the feed for a
+  single 6-hour publish cycle, so any client polling less often than
+  that (Google Calendar and Outlook.com refresh subscriptions roughly
+  daily) could miss it entirely -- stranding exactly the non-compliant
+  clients a tombstone exists for with a permanent wrong-date event. Two
+  guards go with this: a tombstone is retired once its slot is in the
+  past, and is suppressed if its UID is also a live event this run
+  (which happens when a fixture is moved *back* to a date it
+  previously held).
+- **Deliberately not handled:** a (team, opponent) pairing with more
+  than one fixture on either side (a repeat opponent played twice in a
+  season, which does happen -- e.g. Gladiators vs Liverpool). The site
+  gives no identifier beyond team+opponent+date, so which of several
+  same-opponent fixtures moved can't be safely disambiguated; that case
+  silently falls back to passive expiry (the stale UID just isn't
+  re-included in the next feed, which compliant subscription clients
+  treat as a delete on their next refresh anyway).
+  `fetch_previous_state()` treats any failure to load the state file
+  (first-ever run, network hiccup, corrupt file) as "no previous state"
+  rather than aborting the run, and normalises a bare list into the
+  `fixtures` half since that was the file's older shape.
+- **Refuse to publish a partial feed.** `main()` aborts *before writing
+  any file* if a team parses 0 fixtures while future-dated fixtures for
+  that team were on record in the previous state. Zero fixtures for a
+  team is legitimate once its season ends, but not while games that
+  should still be on the page are known -- that means the parse broke,
+  and publishing anyway would silently drop a whole team's games from
+  every subscriber's calendar behind a green CI tick. Failing instead
+  leaves the last good feed live. Don't "simplify" this into a bare
+  count check: the previous-state comparison is what separates a
+  broken parse from an empty schedule.
 
 ## Deployment (already done, for reference)
 - Repo pushed via GitHub Desktop, public, on GitHub's free tier.
