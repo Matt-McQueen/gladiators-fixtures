@@ -10,7 +10,8 @@ pick up fixture changes (time, venue, postponements) automatically.
 - `generate_ics.py` -- the whole pipeline: fetch, parse, build calendar
 - `requirements.txt` -- requests, beautifulsoup4, icalendar
 - `.github/workflows/update-fixtures.yml` -- runs on a cron schedule,
-  publishes `gladiators-fixtures.ics` to the `gh-pages` branch
+  publishes `gladiators-fixtures.ics` **and** `fixtures_state.json` to
+  the `gh-pages` branch (both generated -- `.gitignore`d on `main`)
 
 ## Critical gotcha: what `fetch_text()` actually returns
 `fetch_text()` uses `requests` + `BeautifulSoup(...).get_text()`. This
@@ -58,17 +59,41 @@ to actually fix the root cause, that's an open thread, not a blocker.
   **reversed**: `"Opponent vs Caledonia Gladiators (X) (Away)"`.
 - **No ticket link on away games.** The Fanbase ticket link
   (`https://app.fanbaseclub.com/Fan/Dashboard?clubId=210`) only sells
-  tickets for Gladiators' own venue, so it's only included in the
-  `description` for home fixtures.
+  tickets for Gladiators' own venue, so home fixtures only get it as
+  the event's `URL` property (a clickable link in most calendar apps).
+  It's deliberately **not** duplicated into the `description` text.
 - **"Tip-off" not "kickoff"** -- these are basketball games. Wording in
   descriptions and comments should say tip-off.
+- **Day-before reminder**: every fixture (home and away) gets a
+  `VALARM` (`ACTION:DISPLAY`, `TRIGGER:-P1D`). Apple Calendar and
+  Outlook honour VALARMs from a subscribed feed; Google Calendar
+  ignores them and applies the subscriber's own default notification
+  instead -- that's a Google limitation, not a bug here.
 - **UID** = `sha1(team_code + opponent + date)`, i.e. stable across a
   same-day time change, but a postponement to a different date
-  produces a new UID (old event ages out via the past-date filter on
-  the next run once its would-be time has passed).
+  produces a new UID.
 - **Team code included in UID** so the men's and women's teams playing
   the same opponent on the same date (unlikely but possible) don't
   collide.
+- **Postponement handling**: a stale event for the old date isn't just
+  left to silently disappear from the feed. `generate_ics.py` publishes
+  `fixtures_state.json` (STATE_FILE/STATE_URL) alongside the `.ics`
+  after every run, recording each fixture's team/opponent/date/time/
+  uid. The *next* run fetches that file and, when a (team, opponent)
+  pairing had exactly one fixture last run and exactly one this run but
+  the date changed, treats it as an unambiguous reschedule and emits an
+  explicit `STATUS:CANCELLED` tombstone VEVENT for the old UID/date --
+  see the `build_calendar()` docstring. **Deliberately not handled:**
+  a (team, opponent) pairing with more than one fixture on either side
+  (a repeat opponent played twice in a season, which does happen --
+  e.g. Gladiators vs Liverpool). The site gives no identifier beyond
+  team+opponent+date, so which of several same-opponent fixtures moved
+  can't be safely disambiguated; that case silently falls back to the
+  old passive-expiry behaviour (the stale UID just isn't re-included in
+  the next feed, which compliant subscription clients treat as a
+  delete on their next refresh anyway). `fetch_previous_state()` treats
+  any failure to load the state file (first-ever run, network hiccup,
+  corrupt file) as "no previous state" rather than aborting the run.
 
 ## Deployment (already done, for reference)
 - Repo pushed via GitHub Desktop, public, on GitHub's free tier.

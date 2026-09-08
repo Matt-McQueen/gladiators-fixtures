@@ -49,6 +49,7 @@ jobs:
         run: |
           mkdir -p _site
           cp gladiators-fixtures.ics _site/
+          cp fixtures_state.json _site/
 
       - name: Publish to gh-pages
         uses: peaceiris/actions-gh-pages@v4
