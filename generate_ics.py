@@ -120,6 +120,7 @@ def parse_fixtures(text: str) -> list[dict]:
 
         time_m = TIME_RE.search(lookback)
         time_str = time_m.group(1) if time_m else "12:00 pm"
+        time_tbc = time_m is None
 
         # Venue / played-status sit a few lines after "VS".
         lookahead = "\n".join(lines[i + 1: i + 8])
@@ -140,6 +141,7 @@ def parse_fixtures(text: str) -> list[dict]:
                 "time": time_str,
                 "location": location,
                 "is_home": is_home,
+                "time_tbc": time_tbc,
             }
         )
 
@@ -187,11 +189,15 @@ def build_calendar(fixtures: list[dict]) -> tuple[Calendar, dict]:
             summary = f"{team_name} vs {fx['opponent']} (Home)"
         else:
             summary = f"{fx['opponent']} vs {team_name} (Away)"
+        if fx["time_tbc"]:
+            summary += " (time TBC)"
 
         description = (
             f"Super League Basketball -- {fx['team_label']} fixture ({home_away_tag.lower()}). "
             f"Tip-off {fx['time']}."
         )
+        if fx["time_tbc"]:
+            description += " Tip-off time not yet published -- shown as a placeholder."
         if fx["is_home"]:
             description += f" Tickets: {TICKETS_URL}"
 
