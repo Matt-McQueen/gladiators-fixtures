@@ -40,11 +40,21 @@ jobs:
 
       - run: python generate_ics.py
 
+      # Publish only the generated feed, not the whole repo. Also sidesteps
+      # a peaceiris/actions-gh-pages gotcha: it runs `git add` against
+      # publish_dir and honours any .gitignore found there, so publishing
+      # the repo root (which gitignores gladiators-fixtures.ics to keep it
+      # out of `main`) silently dropped the feed from the gh-pages branch.
+      - name: Prepare publish directory
+        run: |
+          mkdir -p _site
+          cp gladiators-fixtures.ics _site/
+
       - name: Publish to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: ./_site
           publish_branch: gh-pages
           keep_files: false
 
