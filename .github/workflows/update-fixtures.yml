@@ -54,8 +54,16 @@ jobs:
           cp gladiators-fixtures.ics _site/
           cp fixtures_state.json _site/
 
+      # Pinned to a commit SHA, not the `v4` tag. This is the only
+      # third-party action here and it gets contents:write plus the token,
+      # so a re-pointed tag would hand repo write access to whatever it
+      # now refers to -- which is precisely how tj-actions/changed-files
+      # was compromised in March 2025. Tags are mutable; commits aren't.
+      # To upgrade: resolve the new release's commit yourself
+      # (`gh api repos/peaceiris/actions-gh-pages/git/ref/tags/vX.Y.Z`,
+      # dereferencing the annotated tag) and update both SHA and comment.
       - name: Publish to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
