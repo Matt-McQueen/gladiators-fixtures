@@ -69,6 +69,16 @@ to actually fix the root cause, that's an open thread, not a blocker.
   Outlook honour VALARMs from a subscribed feed; Google Calendar
   ignores them and applies the subscriber's own default notification
   instead -- that's a Google limitation, not a bug here.
+- **Refresh interval must track the cron.** `REFRESH_INTERVAL` in
+  `generate_ics.py` is the single source for both `REFRESH-INTERVAL`
+  (RFC 7986) and `X-PUBLISHED-TTL` (the older extension Outlook
+  honours), and must match the workflow cron. It was `PT12H` against a
+  6-hourly publish once, which just made every subscriber lag up to 12
+  hours for no reason. Two traps if you touch this: `X-PUBLISHED-TTL`
+  is untyped, so handed a `timedelta` it silently renders `6:00:00`
+  (not a valid duration) and needs the ISO 8601 string; while
+  `REFRESH-INTERVAL` is DURATION-typed and rejects a string, needing
+  the `timedelta` plus `VALUE=DURATION`.
 - **UID** = `sha1(team_code + opponent + date)`, i.e. stable across a
   same-day time change, but a postponement to a different date
   produces a new UID.

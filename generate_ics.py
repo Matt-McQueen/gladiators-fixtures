@@ -46,6 +46,7 @@ from datetime import datetime, timedelta, timezone
 import requests
 from bs4 import BeautifulSoup
 from icalendar import Alarm, Calendar, Event
+from icalendar.prop import vDuration
 from zoneinfo import ZoneInfo
 
 TEAMS = [
@@ -64,6 +65,10 @@ TEAMS = [
 HOME_ADDRESS = "Playsport Arena, Stewartfield Way, East Kilbride G74 4GT"
 TEAM_TZ = ZoneInfo("Europe/London")
 GAME_DURATION = timedelta(hours=2)
+# How often subscribers are told to poll. MUST track the workflow cron in
+# .github/workflows/update-fixtures.yml: a value longer than the publish
+# cadence just makes every client lag behind for no reason.
+REFRESH_INTERVAL = timedelta(hours=6)
 OUTPUT_FILE = "gladiators-fixtures.ics"
 STATE_FILE = "fixtures_state.json"
 STATE_URL = "https://matt-mcqueen.github.io/gladiators-fixtures/fixtures_state.json"
@@ -238,7 +243,13 @@ def build_calendar(fixtures: list[dict], previous_state: dict) -> tuple[Calendar
     cal.add("version", "2.0")
     cal.add("x-wr-calname", "Caledonia Gladiators Fixtures")
     cal.add("x-wr-timezone", "Europe/London")
-    cal.add("x-published-ttl", "PT12H")
+    # Both spellings of the same hint, from one constant so they can't
+    # drift: REFRESH-INTERVAL is the RFC 7986 property (and needs a
+    # timedelta), X-PUBLISHED-TTL is the older extension Outlook honours
+    # (untyped, so it needs the ISO 8601 string -- handed a timedelta it
+    # silently renders "6:00:00", which is not a valid duration).
+    cal.add("refresh-interval", REFRESH_INTERVAL, parameters={"VALUE": "DURATION"})
+    cal.add("x-published-ttl", vDuration(REFRESH_INTERVAL).to_ical().decode())
 
     now_utc = datetime.now(timezone.utc)
     now_local = now_utc.astimezone(TEAM_TZ)
