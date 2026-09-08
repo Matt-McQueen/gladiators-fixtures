@@ -10,6 +10,8 @@ pick up fixture changes (time, venue, postponements) automatically.
 - `generate_ics.py` -- the whole pipeline: fetch, parse, build calendar
 - `test_generate_ics.py` -- stdlib `unittest`, no network, no extra
   dependency. Run with `python -m unittest -v`
+- `mutation_check.py` -- verifies the suite actually catches the bugs it
+  claims to. Run with `python mutation_check.py`
 - `requirements.txt` -- requests, beautifulsoup4, icalendar, with major
   versions **capped** (`icalendar>=7.3,<8` etc). This runs unattended
   hourly, and icalendar is what formats the output, so an automatic
@@ -172,13 +174,25 @@ regexes -- they get deleted along with the scraper, and a broken parse
 already fails safe in production via `assert_team_coverage()`. Don't
 "improve coverage" by adding them back without that changing.
 
-The suite is mutation-checked: removing the tombstone carry-forward, the
-live-UID collision guard, the repeat-opponent ambiguity guard, the team
-guard's date comparison, the TTL's ISO-string conversion, or
-re-duplicating the ticket URL into the description each make a specific
-test fail. If you change this logic, re-check that the relevant test
-still fails when you break it deliberately -- a passing test against
-broken code is worse than no test.
+The suite is mutation-checked by `mutation_check.py`, which breaks
+`generate_ics.py` eight specific ways in a throwaway copy and confirms
+the intended test fails each time. **Run it after changing any of the
+logic it touches** -- a passing test against broken code is worse than
+no test, because it manufactures confidence. It exits non-zero if a
+mutation survives (that test isn't earning its place) or if a mutation
+no longer applies (the source moved, so the pairing needs rechecking by
+hand).
+
+This isn't ceremony: it caught a genuinely weak test. The
+repeat-opponent case originally only exercised the *current*-run half of
+the ambiguity check, so deleting the previous-run half went unnoticed --
+and that unguarded path would tombstone a game that actually went ahead
+as "CANCELLED (rescheduled)". The asymmetric case (two fixtures against
+an opponent last run, one now because the other was played) is what
+closes it.
+
+Deliberately **not** in CI: the mutations match exact source strings, so
+reformatting would fail the build without telling you anything real.
 
 Tests run in their own workflow (`tests.yml`) on push, **not** in
 `update-fixtures.yml`. A failing test must not stop the hourly publish,
