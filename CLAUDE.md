@@ -66,6 +66,47 @@ output file is correct either way. `main()` reports both counts
 separately so this is visible rather than silently masked. If you want
 to actually fix the root cause, that's an open thread, not a blocker.
 
+## Alternative data sources investigated -- none replace the scraper
+Before touching the parser, it's tempting to look for a cleaner feed.
+Two were investigated in depth; neither works. Don't re-spend time
+re-discovering this.
+
+- **The site's own WordPress REST API**
+  (`https://caledoniagladiators.com/wp-json/wp/v2/fixtures`) is public
+  and unauthenticated, and does list every fixture (past and up to a
+  season ahead) as its own post, with a stable `id` and a `slug`/title
+  encoding team + opponent + date (e.g.
+  `caledonia-gladiators-m-newcastle-eagles-18-04-2027`). But `acf`
+  comes back empty (`[]`) on every record and there's no `content`
+  field in the schema -- **time, venue, home/away, and played-status
+  are not exposed via REST at all**, on this or any other custom post
+  type on the site (`roster`, `community-news`, `news-article`,
+  `sponsors-area` all show the same empty-ACF pattern, so it's a
+  site-wide REST config gap, not something specific to fixtures). The
+  individual fixture post pages themselves don't render real per-match
+  data either -- just a generic template. The actual match data only
+  ever exists in the rendered `/fixtures` listing HTML, which is what
+  `fetch_text()` already scrapes.
+- **Fanbase's own ticketing API**
+  (`POST https://app.fanbaseclub.com/bff/schedule/get-combined-schedule`,
+  body `{"requestedClubIds":[210],"isUpcoming":true,"scheduleItemType":"Fixtures","take":200,"skip":0}`)
+  is also public and unauthenticated, and returns genuinely clean data
+  per fixture: real `kickOffLocal`/`kickOffUtc` datetimes, `venueName`,
+  `homeTeamName`, `oppositionTeamName`, and an explicit
+  `fixtureStatusId`. The catch: **it only ever returns Gladiators' home
+  fixtures** -- Fanbase is a ticketing platform, so it only knows about
+  matches at Gladiators' own venue. Away fixtures would have to come
+  from the *opponent's* Fanbase feed instead (querying their `clubId`
+  and filtering for Gladiators as `oppositionTeamName`), but most SLB
+  opponents (Newcastle Eagles, Liverpool Basketball, Bristol Flyers,
+  London Lions) aren't Fanbase clients at all -- there's no club record
+  to query. Of the opponents that are (Cheshire Phoenix, Sheffield
+  Sharks, Nottingham Wildcats, Leicester Riders, Surrey 89ers,
+  Manchester Basketball), only Manchester Basketball's own feed
+  actually had the corresponding away fixtures entered. So this can't
+  reconstruct a complete away-fixture list even in principle, only
+  fragile partial coverage dependent on each opponent's own data entry.
+
 ## Business rules to preserve
 - **Home vs away wording**: home games read
   `"Caledonia Gladiators (X) vs Opponent (Home)"`; away games are
