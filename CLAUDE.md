@@ -224,8 +224,17 @@ re-discovering this.
   frequency isn't a cost concern.
 - Workflow: `.github/workflows/update-fixtures.yml`, cron
   `0 * * * *` (hourly), triggers via `workflow_dispatch` too.
-- "Workflow permissions" under Settings -> Actions -> General needed
-  to be "Read and write" for the `gh-pages` push step to succeed.
+- The repo-wide "Workflow permissions" under Settings -> Actions ->
+  General is left at its default, **read-only** -- it does NOT need to
+  be "Read and write". Instead `update-fixtures.yml` declares its own
+  `permissions: contents: write` block, which overrides the repo
+  default for just that workflow's `GITHUB_TOKEN` and is what lets the
+  `gh-pages` push step succeed. This is deliberately scoped rather than
+  granted repo-wide: don't "fix" a permissions error by flipping the
+  repo-wide setting to Read and write -- that grants push access to
+  every workflow in the repo, not just this one. If the push step ever
+  starts failing on permissions, check for that block having been
+  removed/edited, not the repo setting.
 - Live feed URL pattern:
   `https://<username>.github.io/<repo>/gladiators-fixtures.ics`
 
