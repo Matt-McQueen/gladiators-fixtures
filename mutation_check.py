@@ -78,6 +78,18 @@ MUTATIONS = [
         'cutoff = dt.replace(hour=23, minute=59)',
         "test_exemption_does_not_leak_to_fixtures_with_a_known_time",
     ),
+    (
+        "VTIMEZONE component dropped",
+        "cal.subcomponents.insert(0, build_timezone(local_datetimes, now_local))",
+        "pass",
+        "test_vtimezone_is_present",
+    ),
+    (
+        "VTIMEZONE appended after the events instead of before",
+        "cal.subcomponents.insert(0, build_timezone(local_datetimes, now_local))",
+        "cal.add_component(build_timezone(local_datetimes, now_local))",
+        "test_vtimezone_precedes_the_events",
+    ),
 ]
 
 

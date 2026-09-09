@@ -370,5 +370,60 @@ class CalendarHeaders(unittest.TestCase):
         self.assertEqual(refresh.params["VALUE"], "DURATION")
 
 
+class TimezoneComponent(unittest.TestCase):
+    """
+    Events carry TZID=Europe/London, and RFC 5545 3.6 says a referenced
+    TZID has to be defined in the same calendar object. The feed shipped
+    without a VTIMEZONE for a long time because the major clients all
+    resolve the name from their own tz database anyway -- so nothing here
+    can rely on "it renders fine in Google Calendar" as evidence.
+    """
+
+    def setUp(self):
+        self.cal, _, _ = build([fixture()])
+
+    def timezones(self):
+        return [c for c in self.cal.walk() if c.name == "VTIMEZONE"]
+
+    def test_vtimezone_is_present(self):
+        self.assertEqual(len(self.timezones()), 1)
+
+    def test_tzid_matches_the_one_the_events_reference(self):
+        """A VTIMEZONE under a different TZID defines nothing useful."""
+        defined = str(self.timezones()[0]["tzid"])
+        referenced = {
+            str(e["dtstart"].params["TZID"]) for e in events(self.cal)
+        }
+        self.assertEqual(referenced, {defined})
+
+    def test_vtimezone_precedes_the_events(self):
+        """
+        Not formally required, but it's what every real feed does, and a
+        single-pass parser can need the definition before its first use.
+        """
+        names = [c.name for c in self.cal.subcomponents]
+        self.assertLess(names.index("VTIMEZONE"), names.index("VEVENT"))
+
+    def test_embedded_rules_give_the_right_offset_for_every_event(self):
+        """
+        The point of the component: a client using *only* what the feed
+        carries must land on the same wall-clock time as one consulting
+        the real tz database. A window too narrow to cover the fixtures
+        would silently fall back to a wrong offset -- an hour late for
+        every BST tip-off.
+        """
+        for fx_date in (days_ahead(30), days_ahead(200), days_ahead(330)):
+            cal, _, _ = build([fixture(date=fx_date)])
+            embedded = [c for c in cal.walk() if c.name == "VTIMEZONE"][0].to_tz()
+            for event in events(cal):
+                for prop in ("dtstart", "dtend"):
+                    moment = event[prop].dt
+                    self.assertEqual(
+                        moment.replace(tzinfo=embedded).utcoffset(),
+                        moment.replace(tzinfo=gi.TEAM_TZ).utcoffset(),
+                        f"{prop} offset differs from the real zone on {fx_date}",
+                    )
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

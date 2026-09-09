@@ -45,7 +45,7 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 from bs4 import BeautifulSoup
-from icalendar import Alarm, Calendar, Event, vDuration
+from icalendar import Alarm, Calendar, Event, Timezone, vDuration
 from zoneinfo import ZoneInfo
 
 TEAMS = [
@@ -203,6 +203,39 @@ def parse_fixtures(text: str) -> list[dict]:
     return fixtures
 
 
+TZ_WINDOW_PADDING = timedelta(days=365)
+
+
+def build_timezone(local_datetimes: list[datetime], now_local: datetime) -> Timezone:
+    """
+    Build the VTIMEZONE that the events' TZID=Europe/London refers to.
+
+    RFC 5545 3.6 requires a TZID referenced by an event to be defined
+    inside the same calendar object, not left for the client to look up.
+    In practice Google, Apple and Outlook all resolve "Europe/London"
+    from their own tz database, which is why the feed rendered correctly
+    for a long time without this -- but a strict parser is entitled to
+    reject the event or fall back to UTC, and during BST that silently
+    shows every tip-off an hour late.
+
+    The transition window is derived from the datetimes actually in the
+    feed rather than icalendar's 1970-2038 default, which emits six
+    decades of transitions this feed will never reference for ~2KB on a
+    ~32KB file. A window has to end somewhere, and a strict client
+    extends the last observance in it forward indefinitely -- so the one
+    thing that matters is that every DTSTART/DTEND the feed carries falls
+    inside the range. The year of padding either side buys margin for
+    that rather than relying on an exact fit.
+    """
+    earliest = min(local_datetimes, default=now_local)
+    latest = max(local_datetimes, default=now_local)
+    return Timezone.from_tzinfo(
+        TEAM_TZ,
+        first_date=(earliest - TZ_WINDOW_PADDING).date(),
+        last_date=(latest + TZ_WINDOW_PADDING).date(),
+    )
+
+
 def build_calendar(
     fixtures: list[dict], previous_state: dict, now_utc: datetime | None = None
 ) -> tuple[Calendar, dict, dict]:
@@ -269,6 +302,9 @@ def build_calendar(
     }
     current_fixtures = []
     written_uids = set()
+    # Every local-time value the feed emits, so the VTIMEZONE window can
+    # be sized to cover exactly them.
+    local_datetimes = []
 
     for fx in fixtures:
         dt = fixture_datetime(fx["date"], fx["time"])
@@ -340,6 +376,7 @@ def build_calendar(
         event.add_component(alarm)
 
         cal.add_component(event)
+        local_datetimes += [dt, dt + GAME_DURATION]
 
         current_fixtures.append(
             {
@@ -404,9 +441,15 @@ def build_calendar(
         cancel_event.add("status", "CANCELLED")
         cancel_event.add("summary", f"CANCELLED (rescheduled) -- {old_summary}")
         cal.add_component(cancel_event)
+        local_datetimes += [old_dt, old_dt + GAME_DURATION]
 
         still_pending.append(rec)
         stats["tombstones_emitted"] += 1
+
+    # VTIMEZONE goes ahead of the events that reference it: RFC 5545
+    # doesn't formally require that order, but it's what every real feed
+    # does and some parsers read the calendar in one pass.
+    cal.subcomponents.insert(0, build_timezone(local_datetimes, now_local))
 
     return cal, stats, {"fixtures": current_fixtures, "tombstones": still_pending}
 

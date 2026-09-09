@@ -91,6 +91,24 @@ to actually fix the root cause, that's an open thread, not a blocker.
   Outlook honour VALARMs from a subscribed feed; Google Calendar
   ignores them and applies the subscriber's own default notification
   instead -- that's a Google limitation, not a bug here.
+- **VTIMEZONE must be present and must precede the events.** Events
+  carry `TZID=Europe/London`, and RFC 5545 3.6 requires a referenced
+  TZID to be defined inside the same calendar object. The feed shipped
+  without one for a long time and rendered correctly anyway, because
+  Google, Apple and Outlook all resolve the name from their own tz
+  database -- so "it looks right in my calendar" is not evidence here.
+  A strict parser may reject the event or fall back to UTC, which
+  during BST shows every tip-off an hour late. `build_timezone()`
+  derives the transition window from the datetimes actually in the feed
+  (padded a year either side) instead of icalendar's 1970-2038 default,
+  which costs ~2KB of transitions the feed never references. A window
+  has to end somewhere and a strict client extends its last observance
+  forward forever, so the property that matters is that every
+  DTSTART/DTEND in the feed falls inside the range -- not the exact
+  bounds. Note that icalendar's own `Timezone.to_tz()` infers an annual
+  recurrence from the transitions, so it resolves dates outside the
+  window correctly; a mutation that narrows the window therefore can't
+  be caught by the suite and deliberately isn't in `mutation_check.py`.
 - **Refresh interval must track the cron.** `REFRESH_INTERVAL` in
   `generate_ics.py` is the single source for both `REFRESH-INTERVAL`
   (RFC 7986) and `X-PUBLISHED-TTL` (the older extension Outlook
