@@ -14,6 +14,7 @@ Run:  python -m unittest -v
 
 import unittest
 from datetime import datetime, timedelta, timezone
+from unittest.mock import MagicMock, patch
 
 from icalendar import vDuration
 
@@ -85,6 +86,52 @@ def cancelled_uids(cal):
 
 def live_uids(cal):
     return {str(e["uid"]) for e in events(cal) if str(e.get("status", "")) != "CANCELLED"}
+
+
+class PreviousStateNormalization(unittest.TestCase):
+    """
+    fetch_previous_state() turns whatever the last run published (or
+    failed to publish) into the {"fixtures": [...], "tombstones": [...]}
+    shape everything else here relies on. Untested until now, even
+    though it's exactly the kind of quiet shape assumption this project
+    has been bitten by before. requests.get is mocked so nothing here
+    touches the network.
+    """
+
+    def mock_response(self, payload):
+        resp = MagicMock()
+        resp.raise_for_status.return_value = None
+        resp.json.return_value = payload
+        return resp
+
+    @patch("generate_ics.requests.get")
+    def test_normalizes_bare_list_shape(self, mock_get):
+        """Older runs published a bare list, before tombstones existed."""
+        mock_get.return_value = self.mock_response([state_record("M", days_ahead(20))])
+        state = gi.fetch_previous_state()
+        self.assertEqual(len(state["fixtures"]), 1)
+        self.assertEqual(state["tombstones"], [])
+
+    @patch("generate_ics.requests.get")
+    def test_dict_shape_missing_tombstones_key_defaults_empty(self, mock_get):
+        mock_get.return_value = self.mock_response({"fixtures": [state_record("M", days_ahead(20))]})
+        state = gi.fetch_previous_state()
+        self.assertEqual(len(state["fixtures"]), 1)
+        self.assertEqual(state["tombstones"], [])
+
+    @patch("generate_ics.requests.get")
+    def test_request_failure_falls_back_to_empty_state(self, mock_get):
+        """A network hiccup shouldn't abort the run -- just skip postponement detection this cycle."""
+        mock_get.side_effect = Exception("connection refused")
+        self.assertEqual(gi.fetch_previous_state(), empty_state())
+
+    @patch("generate_ics.requests.get")
+    def test_corrupt_json_falls_back_to_empty_state(self, mock_get):
+        resp = MagicMock()
+        resp.raise_for_status.return_value = None
+        resp.json.side_effect = ValueError("not json")
+        mock_get.return_value = resp
+        self.assertEqual(gi.fetch_previous_state(), empty_state())
 
 
 class TombstoneLifecycle(unittest.TestCase):
