@@ -92,8 +92,8 @@ to actually fix the root cause, that's an open thread, not a blocker.
   ignores them and applies the subscriber's own default notification
   instead -- that's a Google limitation, not a bug here.
 - **VTIMEZONE must be present and must precede the events.** Events
-  carry `TZID=Europe/London`, and RFC 5545 3.6 requires a referenced
-  TZID to be defined inside the same calendar object. The feed shipped
+  carry `TZID=Europe/London`, and RFC 5545 3.2.19 requires an
+  individual VTIMEZONE for each unique TZID referenced in the object. The feed shipped
   without one for a long time and rendered correctly anyway, because
   Google, Apple and Outlook all resolve the name from their own tz
   database -- so "it looks right in my calendar" is not evidence here.

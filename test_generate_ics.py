@@ -372,8 +372,8 @@ class CalendarHeaders(unittest.TestCase):
 
 class TimezoneComponent(unittest.TestCase):
     """
-    Events carry TZID=Europe/London, and RFC 5545 3.6 says a referenced
-    TZID has to be defined in the same calendar object. The feed shipped
+    Events carry TZID=Europe/London, and RFC 5545 3.2.19 requires an
+    individual VTIMEZONE for each unique TZID referenced in the object. The feed shipped
     without a VTIMEZONE for a long time because the major clients all
     resolve the name from their own tz database anyway -- so nothing here
     can rely on "it renders fine in Google Calendar" as evidence.

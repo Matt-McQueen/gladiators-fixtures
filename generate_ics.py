@@ -210,8 +210,9 @@ def build_timezone(local_datetimes: list[datetime], now_local: datetime) -> Time
     """
     Build the VTIMEZONE that the events' TZID=Europe/London refers to.
 
-    RFC 5545 3.6 requires a TZID referenced by an event to be defined
-    inside the same calendar object, not left for the client to look up.
+    RFC 5545 3.2.19 requires an individual VTIMEZONE for each unique
+    TZID referenced in the object, not a name left for the client to
+    look up.
     In practice Google, Apple and Outlook all resolve "Europe/London"
     from their own tz database, which is why the feed rendered correctly
     for a long time without this -- but a strict parser is entitled to
