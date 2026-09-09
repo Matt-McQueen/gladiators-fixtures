@@ -274,9 +274,14 @@ class BusinessRules(unittest.TestCase):
         self.assertEqual(str(home["url"]), gi.TICKETS_URL)
         self.assertIsNone(away.get("url"))
 
-    def test_ticket_url_not_duplicated_into_the_description(self):
+    def test_ticket_url_duplicated_into_home_description(self):
+        # Outlook doesn't surface a subscribed event's URL property in its
+        # UI (Windows or iOS), so the link is also inlined into the
+        # description text as a workaround for that client.
         home = self.only_event(fixture(is_home=True))
-        self.assertNotIn(gi.TICKETS_URL, str(home["description"]))
+        away = self.only_event(fixture(is_home=False))
+        self.assertIn(gi.TICKETS_URL, str(home["description"]))
+        self.assertNotIn(gi.TICKETS_URL, str(away["description"]))
 
     def test_description_says_tip_off_not_kickoff(self):
         event = self.only_event(fixture())

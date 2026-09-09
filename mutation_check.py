@@ -61,10 +61,10 @@ MUTATIONS = [
         "test_published_ttl_is_an_iso8601_duration",
     ),
     (
-        "ticket URL duplicated back into the description",
-        "f\"Tip-off {fx['time']}.\"",
-        "f\"Tip-off {fx['time']}. Tickets: {TICKETS_URL}\"",
-        "test_ticket_url_not_duplicated_into_the_description",
+        "ticket URL workaround removed from the home description",
+        'description += f" Tickets: {TICKETS_URL}"',
+        "pass",
+        "test_ticket_url_duplicated_into_home_description",
     ),
     (
         "TBC end-of-day exemption removed",

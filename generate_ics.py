@@ -350,6 +350,12 @@ def build_calendar(
         )
         if fx["time_tbc"]:
             description += " Tip-off time not yet published -- shown as a placeholder."
+        if fx["is_home"]:
+            # Duplicated from the URL property: Outlook (Windows and iOS)
+            # doesn't surface a subscribed event's URL anywhere in its UI,
+            # so the description is the only place those subscribers can
+            # actually see the ticket link.
+            description += f" Tickets: {TICKETS_URL}"
 
         event = Event()
         event.add("uid", uid)

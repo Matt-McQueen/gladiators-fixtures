@@ -72,9 +72,15 @@ to actually fix the root cause, that's an open thread, not a blocker.
   **reversed**: `"Opponent vs Caledonia Gladiators (X) (Away)"`.
 - **No ticket link on away games.** The Fanbase ticket link
   (`https://app.fanbaseclub.com/Fan/Dashboard?clubId=210`) only sells
-  tickets for Gladiators' own venue, so home fixtures only get it as
-  the event's `URL` property (a clickable link in most calendar apps).
-  It's deliberately **not** duplicated into the `description` text.
+  tickets for Gladiators' own venue, so only home fixtures get it, as
+  the event's `URL` property (a clickable link in most calendar apps)
+  **and** appended to the `description` text. It used to be
+  deliberately left out of the description to avoid duplication, but
+  Outlook -- both Windows and iOS -- doesn't surface a subscribed
+  event's `URL` property anywhere in its UI at all, so that was the
+  only way those subscribers could see the link. The description is
+  the workaround; the `URL` property stays too, since Apple Calendar,
+  Google Calendar and other clients do render it.
 - **"Tip-off" not "kickoff"** -- these are basketball games. Wording in
   descriptions and comments should say tip-off.
 - **Fixtures with no published tip-off time** get a midday placeholder,
