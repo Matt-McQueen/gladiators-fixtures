@@ -1,0 +1,977 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Caledonia Gladiators Fixtures//caledoniagladiators.com//
+X-WR-CALNAME:Caledonia Gladiators Fixtures
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+X-WR-TIMEZONE:Europe/London
+BEGIN:VTIMEZONE
+TZID:Europe/London
+COMMENT:This timezone only works from 2025-09-20 to 2028-04-24.
+BEGIN:DAYLIGHT
+DTSTART:20250920T000000
+TZNAME:BST
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0100
+END:DAYLIGHT
+BEGIN:STANDARD
+DTSTART:20251026T020000
+RDATE:20261025T020000,20271031T020000
+TZNAME:GMT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0000
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:20260329T020000
+RDATE:20270328T020000,20280326T020000
+TZNAME:BST
+TZOFFSETFROM:+0000
+TZOFFSETTO:+0100
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs Liverpool (Home)
+DTSTART;TZID=Europe/London:20260920T160000
+DTEND;TZID=Europe/London:20260920T180000
+DTSTAMP:20260913T121043Z
+UID:bed01da8f9feb28ad3c993bfbd88f73fb5326691@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 4:00 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs Liverpool (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:B. Braun Sheffield Sharks vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20260927T160000
+DTEND;TZID=Europe/London:20260927T180000
+DTSTAMP:20260913T121043Z
+UID:1fab313a203e412c6a461a9516f61a7e6117027a@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 4:00 
+ pm.
+LOCATION:Canon Medical Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: B. Braun Sheffield Sharks vs Caledonia Gladiators (M
+ ) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Newcastle Eagles vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20261002T193000
+DTEND;TZID=Europe/London:20261002T213000
+DTSTAMP:20260913T121043Z
+UID:89bc62733f721b0495faf80b49e4e1bc9c8d4687@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 7:30 
+ pm.
+LOCATION:Vertu Motors Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Newcastle Eagles vs Caledonia Gladiators (M) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs B. Braun Sheffield Sharks (Home)
+DTSTART;TZID=Europe/London:20261016T193000
+DTEND;TZID=Europe/London:20261016T213000
+DTSTAMP:20260913T121043Z
+UID:12e81afcbc01c707d46e47c008b881320fdd8a6f@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 7:30 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs B. Braun Sheffield Shark
+ s (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Manchester Basketball vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20261018T150000
+DTEND;TZID=Europe/London:20261018T170000
+DTSTAMP:20260913T121043Z
+UID:614ea83c219a3666b220b74d14d7f43997b202bb@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 3:00 
+ pm.
+LOCATION:National Basketball Performance Centre
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Manchester Basketball vs Caledonia Gladiators (M) (A
+ way)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs Newcastle Eagles (Home)
+DTSTART;TZID=Europe/London:20261101T170000
+DTEND;TZID=Europe/London:20261101T190000
+DTSTAMP:20260913T121043Z
+UID:d6cfccd5857152902cb968ca612cb827aa7bdad7@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 5:00 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs Newcastle Eagles (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Liverpool vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20261108T160000
+DTEND;TZID=Europe/London:20261108T180000
+DTSTAMP:20260913T121043Z
+UID:28e0308714175b3e45e343fc31ab9de3d2e31ffd@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 4:00 
+ pm.
+LOCATION:TBC
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Liverpool vs Caledonia Gladiators (M) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs Leicester Riders (Home)
+DTSTART;TZID=Europe/London:20261115T160000
+DTEND;TZID=Europe/London:20261115T180000
+DTSTAMP:20260913T121043Z
+UID:e4714a0a8523babf5c888cead3f2c17af9f128ff@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 4:00 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs Leicester Riders (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Cheshire Phoenix vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20261122T173000
+DTEND;TZID=Europe/London:20261122T193000
+DTSTAMP:20260913T121043Z
+UID:6d39169011955c5c02b25fc05586885181eb7be1@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 5:30 
+ pm.
+LOCATION:Cheshire Oaks Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Cheshire Phoenix vs Caledonia Gladiators (M) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs Manchester Basketball (Home)
+DTSTART;TZID=Europe/London:20261204T193000
+DTEND;TZID=Europe/London:20261204T213000
+DTSTAMP:20260913T121043Z
+UID:20f7a91fa6e815bcc62fc1b4796f812a605838ce@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 7:30 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs Manchester Basketball (H
+ ome)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Leicester Riders vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20261213T160000
+DTEND;TZID=Europe/London:20261213T180000
+DTSTAMP:20260913T121043Z
+UID:bf624665afc45c9a28e488ac6e441cadb9b0d89e@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 4:00 
+ pm.
+LOCATION:Mattioli Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Leicester Riders vs Caledonia Gladiators (M) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs Surrey 89ers (Home)
+DTSTART;TZID=Europe/London:20261218T193000
+DTEND;TZID=Europe/London:20261218T213000
+DTSTAMP:20260913T121043Z
+UID:094151115c8e0e4dbe09de7afae9be975eb69b22@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 7:30 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs Surrey 89ers (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:B. Braun Sheffield Sharks vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20261220T160000
+DTEND;TZID=Europe/London:20261220T180000
+DTSTAMP:20260913T121043Z
+UID:d78b5f903fa79cc80476b91287e9b0245d470d41@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 4:00 
+ pm.
+LOCATION:Canon Medical Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: B. Braun Sheffield Sharks vs Caledonia Gladiators (M
+ ) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Liverpool vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20261227T160000
+DTEND;TZID=Europe/London:20261227T180000
+DTSTAMP:20260913T121043Z
+UID:d1992197fd844cea408153380c23faaaef536140@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 4:00 
+ pm.
+LOCATION:TBC
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Liverpool vs Caledonia Gladiators (M) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs Cheshire Phoenix (Home)
+DTSTART;TZID=Europe/London:20261229T193000
+DTEND;TZID=Europe/London:20261229T213000
+DTSTAMP:20260913T121043Z
+UID:60b797b3f7c99a3e76e7cb88fdf5230e490af554@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 7:30 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs Cheshire Phoenix (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs Bristol Flyers (Home)
+DTSTART;TZID=Europe/London:20270103T160000
+DTEND;TZID=Europe/London:20270103T180000
+DTSTAMP:20260913T121043Z
+UID:d6198ff11c8eee2673442086a189554f43b1edea@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 4:00 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs Bristol Flyers (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Newcastle Eagles vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20270108T193000
+DTEND;TZID=Europe/London:20270108T213000
+DTSTAMP:20260913T121043Z
+UID:029246f6d7e7ed6f913baa86e52a676c6c863fca@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 7:30 
+ pm.
+LOCATION:Vertu Motors Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Newcastle Eagles vs Caledonia Gladiators (M) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs B. Braun Sheffield Sharks (Home)
+DTSTART;TZID=Europe/London:20270122T193000
+DTEND;TZID=Europe/London:20270122T213000
+DTSTAMP:20260913T121043Z
+UID:4024bbd317e1340d760c7807fa36fefd495e6a41@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 7:30 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs B. Braun Sheffield Shark
+ s (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Cheshire Phoenix vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20270131T173000
+DTEND;TZID=Europe/London:20270131T193000
+DTSTAMP:20260913T121043Z
+UID:de482ea2e4266610df1628718ad6bde34d02c6d5@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 5:30 
+ pm.
+LOCATION:Cheshire Oaks Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Cheshire Phoenix vs Caledonia Gladiators (M) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs London Lions (Home)
+DTSTART;TZID=Europe/London:20270214T160000
+DTEND;TZID=Europe/London:20270214T180000
+DTSTAMP:20260913T121043Z
+UID:b3c18b4ada7b6ef983f357ddbb0e151dda910968@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 4:00 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs London Lions (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Leicester Riders vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20270219T193000
+DTEND;TZID=Europe/London:20270219T213000
+DTSTAMP:20260913T121043Z
+UID:03c72219d3fe5703d3c91660fb8e4a304722efbb@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 7:30 
+ pm.
+LOCATION:Mattioli Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Leicester Riders vs Caledonia Gladiators (M) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs Bristol Flyers (Home)
+DTSTART;TZID=Europe/London:20270307T170000
+DTEND;TZID=Europe/London:20270307T190000
+DTSTAMP:20260913T121043Z
+UID:ab2c31931d7bda9590a96909cbe88448f7843b24@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 5:00 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs Bristol Flyers (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs Manchester Basketball (Home)
+DTSTART;TZID=Europe/London:20270312T193000
+DTEND;TZID=Europe/London:20270312T213000
+DTSTAMP:20260913T121043Z
+UID:79f2b25eb17f76bef7e72de6cd644bff18802ca5@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 7:30 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs Manchester Basketball (H
+ ome)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Bristol Flyers vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20270314T150000
+DTEND;TZID=Europe/London:20270314T170000
+DTSTAMP:20260913T121043Z
+UID:171e8e5089d9fbb83f6d9cafe17145bdddc66f21@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 3:00 
+ pm.
+LOCATION:SGS College Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Bristol Flyers vs Caledonia Gladiators (M) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Newcastle Eagles vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20270319T193000
+DTEND;TZID=Europe/London:20270319T213000
+DTSTAMP:20260913T121043Z
+UID:079f8f1669946a42f8b24304057437e5bdd538dc@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 7:30 
+ pm.
+LOCATION:Vertu Motors Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Newcastle Eagles vs Caledonia Gladiators (M) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs Leicester Riders (Home)
+DTSTART;TZID=Europe/London:20270326T193000
+DTEND;TZID=Europe/London:20270326T213000
+DTSTAMP:20260913T121043Z
+UID:2f49f83dadbcb170bc1d27598970234520d9dc43@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 7:30 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs Leicester Riders (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs Cheshire Phoenix (Home)
+DTSTART;TZID=Europe/London:20270402T193000
+DTEND;TZID=Europe/London:20270402T213000
+DTSTAMP:20260913T121043Z
+UID:d0da848886af80b054c627b7f30d5c06b944878d@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 7:30 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs Cheshire Phoenix (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Manchester Basketball vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20270404T150000
+DTEND;TZID=Europe/London:20270404T170000
+DTSTAMP:20260913T121043Z
+UID:0cf7b334cbd8851958a43cfea09a455e7a51ebbb@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 3:00 
+ pm.
+LOCATION:National Basketball Performance Centre
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Manchester Basketball vs Caledonia Gladiators (M) (A
+ way)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs Surrey 89ers (Home)
+DTSTART;TZID=Europe/London:20270409T193000
+DTEND;TZID=Europe/London:20270409T213000
+DTSTAMP:20260913T121043Z
+UID:ad4dc365ffb14ff660c24d8d41e61994af9edaa2@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 7:30 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs Surrey 89ers (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Bristol Flyers vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20270416T193000
+DTEND;TZID=Europe/London:20270416T213000
+DTSTAMP:20260913T121043Z
+UID:560c35e0f36bdc1375dea674d8909b39089bb204@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 7:30 
+ pm.
+LOCATION:SGS College Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Bristol Flyers vs Caledonia Gladiators (M) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs Newcastle Eagles (Home)
+DTSTART;TZID=Europe/London:20270418T160000
+DTEND;TZID=Europe/London:20270418T180000
+DTSTAMP:20260913T121043Z
+UID:e5da7687820fb362e958e95f842909dfced85a56@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 4:00 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs Newcastle Eagles (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:London Lions vs Caledonia Gladiators (M) (Away)
+DTSTART;TZID=Europe/London:20270423T193000
+DTEND;TZID=Europe/London:20270423T213000
+DTSTAMP:20260913T121043Z
+UID:1d459612ef7936d7f124f3c7ddafccf3380508eb@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (away). Tip-off 7:30 
+ pm.
+LOCATION:Copper Box Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: London Lions vs Caledonia Gladiators (M) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (M) vs Liverpool (Home)
+DTSTART;TZID=Europe/London:20270425T160000
+DTEND;TZID=Europe/London:20270425T180000
+DTSTAMP:20260913T121043Z
+UID:8c392c1b21d0e38f47f10c898420f1cabdab2706@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Men's fixture (home). Tip-off 4:00 
+ pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:M
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (M) vs Liverpool (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (W) vs Essex Rebels (Home)
+DTSTART;TZID=Europe/London:20261004T160000
+DTEND;TZID=Europe/London:20261004T180000
+DTSTAMP:20260913T121043Z
+UID:71a71542eb05903645cdaf0c48a4b017642d9caf@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (home). Tip-off 4:0
+ 0 pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (W) vs Essex Rebels (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:London Lions vs Caledonia Gladiators (W) (Away)
+DTSTART;TZID=Europe/London:20261010T190000
+DTEND;TZID=Europe/London:20261010T210000
+DTSTAMP:20260913T121043Z
+UID:79c50ba38f49ddfc57c69196521904cd6352c1a4@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (away). Tip-off 7:0
+ 0 pm.
+LOCATION:New City College Hackney
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: London Lions vs Caledonia Gladiators (W) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (W) vs Newcastle Eagles (Home)
+DTSTART;TZID=Europe/London:20261018T160000
+DTEND;TZID=Europe/London:20261018T180000
+DTSTAMP:20260913T121043Z
+UID:60c13d2ba0e4097deb68ff5ab25be06a41447f43@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (home). Tip-off 4:0
+ 0 pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (W) vs Newcastle Eagles (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Oaklands Wolves vs Caledonia Gladiators (W) (Away)
+DTSTART;TZID=Europe/London:20261024T190000
+DTEND;TZID=Europe/London:20261024T210000
+DTSTAMP:20260913T121043Z
+UID:dc63ff38630404b61b955d4c2987106fe1e037cf@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (away). Tip-off 7:0
+ 0 pm.
+LOCATION:Oaklands College Sportszone
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Oaklands Wolves vs Caledonia Gladiators (W) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (W) vs Nottingham Wildcats (Home)
+DTSTART;TZID=Europe/London:20261101T140000
+DTEND;TZID=Europe/London:20261101T160000
+DTSTAMP:20260913T121043Z
+UID:7fb5a9c09727f1955d5b22ddcb9593dc4ece3dc2@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (home). Tip-off 2:0
+ 0 pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (W) vs Nottingham Wildcats (Hom
+ e)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Cardiff Met Archers vs Caledonia Gladiators (W) (Away)
+DTSTART;TZID=Europe/London:20261107T133000
+DTEND;TZID=Europe/London:20261107T153000
+DTSTAMP:20260913T121043Z
+UID:1a517851343e3522a2527ec77754f3d880b8c735@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (away). Tip-off 1:3
+ 0 pm.
+LOCATION:Archers Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Cardiff Met Archers vs Caledonia Gladiators (W) (Awa
+ y)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Nottingham Wildcats vs Caledonia Gladiators (W) (Away)
+DTSTART;TZID=Europe/London:20261128T190000
+DTEND;TZID=Europe/London:20261128T210000
+DTSTAMP:20260913T121043Z
+UID:36da3b162112664a46c2ce4c73ee202c2d2fa259@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (away). Tip-off 7:0
+ 0 pm.
+LOCATION:Nottingham Wildcats Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Nottingham Wildcats vs Caledonia Gladiators (W) (Awa
+ y)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (W) vs Manchester Basketball (Home)
+DTSTART;TZID=Europe/London:20261206T160000
+DTEND;TZID=Europe/London:20261206T180000
+DTSTAMP:20260913T121043Z
+UID:9ebd2896c70a0c06024ecd9688ca6a3c3273d168@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (home). Tip-off 4:0
+ 0 pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (W) vs Manchester Basketball (H
+ ome)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Leicester Riders vs Caledonia Gladiators (W) (Away)
+DTSTART;TZID=Europe/London:20261212T180000
+DTEND;TZID=Europe/London:20261212T200000
+DTSTAMP:20260913T121043Z
+UID:cc9a6646b1cd989c5e8a7e30ff31fd46e7528058@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (away). Tip-off 6:0
+ 0 pm.
+LOCATION:Netball Centre
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Leicester Riders vs Caledonia Gladiators (W) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Essex Rebels vs Caledonia Gladiators (W) (Away) (time TBC)
+DTSTART;TZID=Europe/London:20261219T120000
+DTEND;TZID=Europe/London:20261219T140000
+DTSTAMP:20260913T121043Z
+UID:957ffe070df9cc2c39bfd4850bc0e56523a9a760@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (away). Tip-off 12:
+ 00 pm. Tip-off time not yet published -- shown as a placeholder.
+LOCATION:Essex Sports Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Essex Rebels vs Caledonia Gladiators (W) (Away) (tim
+ e TBC)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:B. Braun Sheffield Hatters vs Caledonia Gladiators (W) (Away)
+DTSTART;TZID=Europe/London:20270102T190000
+DTEND;TZID=Europe/London:20270102T210000
+DTSTAMP:20260913T121043Z
+UID:27744fe1676cc597bc4bbb6b7eaa901ffbdeec8f@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (away). Tip-off 7:0
+ 0 pm.
+LOCATION:Canon Medical Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: B. Braun Sheffield Hatters vs Caledonia Gladiators (
+ W) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (W) vs Newcastle Eagles (Home)
+DTSTART;TZID=Europe/London:20270110T160000
+DTEND;TZID=Europe/London:20270110T180000
+DTSTAMP:20260913T121043Z
+UID:eaaa82616cd086fb8363f3703ab494f9da84d880@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (home). Tip-off 4:0
+ 0 pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (W) vs Newcastle Eagles (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (W) vs Manchester Basketball (Home)
+DTSTART;TZID=Europe/London:20270124T160000
+DTEND;TZID=Europe/London:20270124T180000
+DTSTAMP:20260913T121043Z
+UID:a22270c3b49e26ffca315a5ca63086c1e24918d2@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (home). Tip-off 4:0
+ 0 pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (W) vs Manchester Basketball (H
+ ome)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Nottingham Wildcats vs Caledonia Gladiators (W) (Away)
+DTSTART;TZID=Europe/London:20270130T170000
+DTEND;TZID=Europe/London:20270130T190000
+DTSTAMP:20260913T121043Z
+UID:a71fcb5b6cd518c3393f8552eab42d175771aefa@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (away). Tip-off 5:0
+ 0 pm.
+LOCATION:Nottingham Wildcats Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Nottingham Wildcats vs Caledonia Gladiators (W) (Awa
+ y)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Newcastle Eagles vs Caledonia Gladiators (W) (Away)
+DTSTART;TZID=Europe/London:20270206T193000
+DTEND;TZID=Europe/London:20270206T213000
+DTSTAMP:20260913T121043Z
+UID:8e4e11998e5bf9b91bed5e4fccd3cb5840bedaa3@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (away). Tip-off 7:3
+ 0 pm.
+LOCATION:Vertu Motors Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Newcastle Eagles vs Caledonia Gladiators (W) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Manchester Basketball vs Caledonia Gladiators (W) (Away)
+DTSTART;TZID=Europe/London:20270221T140000
+DTEND;TZID=Europe/London:20270221T160000
+DTSTAMP:20260913T121043Z
+UID:22bd784d5ad0bffa852e02c4518591600da77281@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (away). Tip-off 2:0
+ 0 pm.
+LOCATION:National Basketball Performance Centre
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Manchester Basketball vs Caledonia Gladiators (W) (A
+ way)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (W) vs Oaklands Wolves (Home)
+DTSTART;TZID=Europe/London:20270307T140000
+DTEND;TZID=Europe/London:20270307T160000
+DTSTAMP:20260913T121043Z
+UID:e8fee86774b12e6842238016f99bced669e0e1a4@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (home). Tip-off 2:0
+ 0 pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (W) vs Oaklands Wolves (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (W) vs London Lions (Home)
+DTSTART;TZID=Europe/London:20270328T160000
+DTEND;TZID=Europe/London:20270328T180000
+DTSTAMP:20260913T121043Z
+UID:02a6c576dbd4c0b8e881a385cea12db2b1b305bc@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (home). Tip-off 4:0
+ 0 pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (W) vs London Lions (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Caledonia Gladiators (W) vs Leicester Riders (Home)
+DTSTART;TZID=Europe/London:20270404T160000
+DTEND;TZID=Europe/London:20270404T180000
+DTSTAMP:20260913T121043Z
+UID:79d38e387ba3df2c9cb4efebbca2174984d54f50@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (home). Tip-off 4:0
+ 0 pm. Tickets: https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+LOCATION:Playsport Arena\, Stewartfield Way\, East Kilbride G74 4GT
+URL:https://app.fanbaseclub.com/Fan/Dashboard?clubId=210
+X-FIXTURE-HOME-AWAY:HOME
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Caledonia Gladiators (W) vs Leicester Riders (Home)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:B. Braun Sheffield Hatters vs Caledonia Gladiators (W) (Away)
+DTSTART;TZID=Europe/London:20270410T190000
+DTEND;TZID=Europe/London:20270410T210000
+DTSTAMP:20260913T121043Z
+UID:d37ad255beaf7fc8214c83ae8b64eafc34e6bbf7@caledoniagladiators.com
+DESCRIPTION:Super League Basketball -- Women's fixture (away). Tip-off 7:0
+ 0 pm.
+LOCATION:Canon Medical Arena
+X-FIXTURE-HOME-AWAY:AWAY
+X-FIXTURE-TEAM:W
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: B. Braun Sheffield Hatters vs Caledonia Gladiators (
+ W) (Away)
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+END:VCALENDAR

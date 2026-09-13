@@ -1,0 +1,429 @@
+{
+  "fixtures": [
+    {
+      "team_code": "M",
+      "opponent": "Liverpool",
+      "date": "20/09/2026",
+      "time": "4:00 pm",
+      "is_home": true,
+      "uid": "bed01da8f9feb28ad3c993bfbd88f73fb5326691@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "B. Braun Sheffield Sharks",
+      "date": "27/09/2026",
+      "time": "4:00 pm",
+      "is_home": false,
+      "uid": "1fab313a203e412c6a461a9516f61a7e6117027a@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Newcastle Eagles",
+      "date": "02/10/2026",
+      "time": "7:30 pm",
+      "is_home": false,
+      "uid": "89bc62733f721b0495faf80b49e4e1bc9c8d4687@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "B. Braun Sheffield Sharks",
+      "date": "16/10/2026",
+      "time": "7:30 pm",
+      "is_home": true,
+      "uid": "12e81afcbc01c707d46e47c008b881320fdd8a6f@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Manchester Basketball",
+      "date": "18/10/2026",
+      "time": "3:00 pm",
+      "is_home": false,
+      "uid": "614ea83c219a3666b220b74d14d7f43997b202bb@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Newcastle Eagles",
+      "date": "01/11/2026",
+      "time": "5:00 pm",
+      "is_home": true,
+      "uid": "d6cfccd5857152902cb968ca612cb827aa7bdad7@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Liverpool",
+      "date": "08/11/2026",
+      "time": "4:00 pm",
+      "is_home": false,
+      "uid": "28e0308714175b3e45e343fc31ab9de3d2e31ffd@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Leicester Riders",
+      "date": "15/11/2026",
+      "time": "4:00 pm",
+      "is_home": true,
+      "uid": "e4714a0a8523babf5c888cead3f2c17af9f128ff@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Cheshire Phoenix",
+      "date": "22/11/2026",
+      "time": "5:30 pm",
+      "is_home": false,
+      "uid": "6d39169011955c5c02b25fc05586885181eb7be1@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Manchester Basketball",
+      "date": "04/12/2026",
+      "time": "7:30 pm",
+      "is_home": true,
+      "uid": "20f7a91fa6e815bcc62fc1b4796f812a605838ce@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Leicester Riders",
+      "date": "13/12/2026",
+      "time": "4:00 pm",
+      "is_home": false,
+      "uid": "bf624665afc45c9a28e488ac6e441cadb9b0d89e@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Surrey 89ers",
+      "date": "18/12/2026",
+      "time": "7:30 pm",
+      "is_home": true,
+      "uid": "094151115c8e0e4dbe09de7afae9be975eb69b22@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "B. Braun Sheffield Sharks",
+      "date": "20/12/2026",
+      "time": "4:00 pm",
+      "is_home": false,
+      "uid": "d78b5f903fa79cc80476b91287e9b0245d470d41@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Liverpool",
+      "date": "27/12/2026",
+      "time": "4:00 pm",
+      "is_home": false,
+      "uid": "d1992197fd844cea408153380c23faaaef536140@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Cheshire Phoenix",
+      "date": "29/12/2026",
+      "time": "7:30 pm",
+      "is_home": true,
+      "uid": "60b797b3f7c99a3e76e7cb88fdf5230e490af554@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Bristol Flyers",
+      "date": "03/01/2027",
+      "time": "4:00 pm",
+      "is_home": true,
+      "uid": "d6198ff11c8eee2673442086a189554f43b1edea@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Newcastle Eagles",
+      "date": "08/01/2027",
+      "time": "7:30 pm",
+      "is_home": false,
+      "uid": "029246f6d7e7ed6f913baa86e52a676c6c863fca@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "B. Braun Sheffield Sharks",
+      "date": "22/01/2027",
+      "time": "7:30 pm",
+      "is_home": true,
+      "uid": "4024bbd317e1340d760c7807fa36fefd495e6a41@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Cheshire Phoenix",
+      "date": "31/01/2027",
+      "time": "5:30 pm",
+      "is_home": false,
+      "uid": "de482ea2e4266610df1628718ad6bde34d02c6d5@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "London Lions",
+      "date": "14/02/2027",
+      "time": "4:00 pm",
+      "is_home": true,
+      "uid": "b3c18b4ada7b6ef983f357ddbb0e151dda910968@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Leicester Riders",
+      "date": "19/02/2027",
+      "time": "7:30 pm",
+      "is_home": false,
+      "uid": "03c72219d3fe5703d3c91660fb8e4a304722efbb@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Bristol Flyers",
+      "date": "07/03/2027",
+      "time": "5:00 pm",
+      "is_home": true,
+      "uid": "ab2c31931d7bda9590a96909cbe88448f7843b24@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Manchester Basketball",
+      "date": "12/03/2027",
+      "time": "7:30 pm",
+      "is_home": true,
+      "uid": "79f2b25eb17f76bef7e72de6cd644bff18802ca5@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Bristol Flyers",
+      "date": "14/03/2027",
+      "time": "3:00 pm",
+      "is_home": false,
+      "uid": "171e8e5089d9fbb83f6d9cafe17145bdddc66f21@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Newcastle Eagles",
+      "date": "19/03/2027",
+      "time": "7:30 pm",
+      "is_home": false,
+      "uid": "079f8f1669946a42f8b24304057437e5bdd538dc@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Leicester Riders",
+      "date": "26/03/2027",
+      "time": "7:30 pm",
+      "is_home": true,
+      "uid": "2f49f83dadbcb170bc1d27598970234520d9dc43@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Cheshire Phoenix",
+      "date": "02/04/2027",
+      "time": "7:30 pm",
+      "is_home": true,
+      "uid": "d0da848886af80b054c627b7f30d5c06b944878d@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Manchester Basketball",
+      "date": "04/04/2027",
+      "time": "3:00 pm",
+      "is_home": false,
+      "uid": "0cf7b334cbd8851958a43cfea09a455e7a51ebbb@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Surrey 89ers",
+      "date": "09/04/2027",
+      "time": "7:30 pm",
+      "is_home": true,
+      "uid": "ad4dc365ffb14ff660c24d8d41e61994af9edaa2@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Bristol Flyers",
+      "date": "16/04/2027",
+      "time": "7:30 pm",
+      "is_home": false,
+      "uid": "560c35e0f36bdc1375dea674d8909b39089bb204@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Newcastle Eagles",
+      "date": "18/04/2027",
+      "time": "4:00 pm",
+      "is_home": true,
+      "uid": "e5da7687820fb362e958e95f842909dfced85a56@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "London Lions",
+      "date": "23/04/2027",
+      "time": "7:30 pm",
+      "is_home": false,
+      "uid": "1d459612ef7936d7f124f3c7ddafccf3380508eb@caledoniagladiators.com"
+    },
+    {
+      "team_code": "M",
+      "opponent": "Liverpool",
+      "date": "25/04/2027",
+      "time": "4:00 pm",
+      "is_home": true,
+      "uid": "8c392c1b21d0e38f47f10c898420f1cabdab2706@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Essex Rebels",
+      "date": "04/10/2026",
+      "time": "4:00 pm",
+      "is_home": true,
+      "uid": "71a71542eb05903645cdaf0c48a4b017642d9caf@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "London Lions",
+      "date": "10/10/2026",
+      "time": "7:00 pm",
+      "is_home": false,
+      "uid": "79c50ba38f49ddfc57c69196521904cd6352c1a4@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Newcastle Eagles",
+      "date": "18/10/2026",
+      "time": "4:00 pm",
+      "is_home": true,
+      "uid": "60c13d2ba0e4097deb68ff5ab25be06a41447f43@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Oaklands Wolves",
+      "date": "24/10/2026",
+      "time": "7:00 pm",
+      "is_home": false,
+      "uid": "dc63ff38630404b61b955d4c2987106fe1e037cf@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Nottingham Wildcats",
+      "date": "01/11/2026",
+      "time": "2:00 pm",
+      "is_home": true,
+      "uid": "7fb5a9c09727f1955d5b22ddcb9593dc4ece3dc2@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Cardiff Met Archers",
+      "date": "07/11/2026",
+      "time": "1:30 pm",
+      "is_home": false,
+      "uid": "1a517851343e3522a2527ec77754f3d880b8c735@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Nottingham Wildcats",
+      "date": "28/11/2026",
+      "time": "7:00 pm",
+      "is_home": false,
+      "uid": "36da3b162112664a46c2ce4c73ee202c2d2fa259@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Manchester Basketball",
+      "date": "06/12/2026",
+      "time": "4:00 pm",
+      "is_home": true,
+      "uid": "9ebd2896c70a0c06024ecd9688ca6a3c3273d168@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Leicester Riders",
+      "date": "12/12/2026",
+      "time": "6:00 pm",
+      "is_home": false,
+      "uid": "cc9a6646b1cd989c5e8a7e30ff31fd46e7528058@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Essex Rebels",
+      "date": "19/12/2026",
+      "time": "12:00 pm",
+      "is_home": false,
+      "uid": "957ffe070df9cc2c39bfd4850bc0e56523a9a760@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "B. Braun Sheffield Hatters",
+      "date": "02/01/2027",
+      "time": "7:00 pm",
+      "is_home": false,
+      "uid": "27744fe1676cc597bc4bbb6b7eaa901ffbdeec8f@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Newcastle Eagles",
+      "date": "10/01/2027",
+      "time": "4:00 pm",
+      "is_home": true,
+      "uid": "eaaa82616cd086fb8363f3703ab494f9da84d880@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Manchester Basketball",
+      "date": "24/01/2027",
+      "time": "4:00 pm",
+      "is_home": true,
+      "uid": "a22270c3b49e26ffca315a5ca63086c1e24918d2@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Nottingham Wildcats",
+      "date": "30/01/2027",
+      "time": "5:00 pm",
+      "is_home": false,
+      "uid": "a71fcb5b6cd518c3393f8552eab42d175771aefa@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Newcastle Eagles",
+      "date": "06/02/2027",
+      "time": "7:30 pm",
+      "is_home": false,
+      "uid": "8e4e11998e5bf9b91bed5e4fccd3cb5840bedaa3@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Manchester Basketball",
+      "date": "21/02/2027",
+      "time": "2:00 pm",
+      "is_home": false,
+      "uid": "22bd784d5ad0bffa852e02c4518591600da77281@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Oaklands Wolves",
+      "date": "07/03/2027",
+      "time": "2:00 pm",
+      "is_home": true,
+      "uid": "e8fee86774b12e6842238016f99bced669e0e1a4@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "London Lions",
+      "date": "28/03/2027",
+      "time": "4:00 pm",
+      "is_home": true,
+      "uid": "02a6c576dbd4c0b8e881a385cea12db2b1b305bc@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "Leicester Riders",
+      "date": "04/04/2027",
+      "time": "4:00 pm",
+      "is_home": true,
+      "uid": "79d38e387ba3df2c9cb4efebbca2174984d54f50@caledoniagladiators.com"
+    },
+    {
+      "team_code": "W",
+      "opponent": "B. Braun Sheffield Hatters",
+      "date": "10/04/2027",
+      "time": "7:00 pm",
+      "is_home": false,
+      "uid": "d37ad255beaf7fc8214c83ae8b64eafc34e6bbf7@caledoniagladiators.com"
+    }
+  ],
+  "tombstones": []
+}
